@@ -1,0 +1,152 @@
+{
+	"parser": "@babel/eslint-parser",
+	"overrides": [
+		{
+			"files": ["**/*.ts", "**/*.tsx"],
+			"parser": "@typescript-eslint/parser",
+			"plugins": ["@typescript-eslint/eslint-plugin"],
+			"rules": {
+				"no-use-before-define": "off",
+				"@typescript-eslint/no-use-before-define": ["error"]
+			}
+		}
+	],
+	"plugins": [
+		"meteor",
+		"react-hooks"
+	],
+	"parserOptions": {
+			"ecmaVersion": 2018,
+			"sourceType": "module"
+		},
+	"settings": {
+		"import/resolver": "meteor"
+	},
+	"extends": [
+		"react-app",
+		"airbnb",
+		"plugin:meteor/recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"env": {
+		"meteor": true,
+		"node": true,
+		"browser": true
+	},
+	"globals": {
+		"Factory": true,
+		"Roles": true,
+		"Slingshot": true
+	},
+	"rules": {
+		"array-callback-return": [
+			"off"
+		],
+		"no-underscore-dangle": [
+			"off"
+		],
+		"import/no-extraneous-dependencies": [
+			"error", {"devDependencies": true}
+		],
+		"eol-last": [
+			"error",
+			"always"
+		],
+		"func-names": [
+			"error",
+			"as-needed"
+		],
+		"quotes": [
+			2,
+			"single",
+			{
+				"avoidEscape": true,
+				"allowTemplateLiterals": true
+			}
+		],
+		"padded-blocks": [
+			"error",
+			"never"
+		],
+		"semi": [
+			"error",
+			"always"
+		],
+		"indent": [
+			"error",
+			"tab",
+			{
+				"SwitchCase": 1
+			}
+		],
+		"key-spacing": [
+			"error",
+			{
+				"mode": "strict"
+			}
+		],
+		"no-alert": [
+			"off"
+		],
+		"object-curly-spacing": [
+			"error",
+			"always"
+		],
+		"quote-props": [
+			2,
+			"always"
+		],
+		"consistent-return": [
+			"off"
+		],
+		"no-return-assign": [
+			"off"
+		],
+		"no-tabs": [
+			"off"
+		],
+		"max-len": [
+			"off"
+		],
+		"react/jsx-indent": [
+			"error",
+			"tab"
+		],
+		"react/jsx-indent-props": [
+			"error",
+			"tab"
+		],
+		"react/jsx-filename-extension": [
+			1,
+			{
+				"extensions": [
+					".js",
+					".jsx",
+					".ts",
+					".tsx"
+				]
+			}
+		],
+		"react/jsx-fragments": [
+			"off"
+		],
+		"react/no-did-update-set-state": [
+			"warn"
+		],
+		"react/require-default-props": [
+			"off"
+		],
+		"react/jsx-one-expression-per-line": [
+			"off"
+		],
+		"react/jsx-boolean-value": [
+			"off"
+		],
+		"jsx-a11y/label-has-associated-control": [
+			1,
+			{
+				"assert": "either"
+			}
+		]
+	}
+}
