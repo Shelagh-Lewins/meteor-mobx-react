@@ -75,6 +75,9 @@ meteor add fourseven:scss
 
 fourseven uses node-sass, not dart-sass, and therefore doesn't support the newer @use syntax. You have to use the now discouraged @import. There is a promised upgrade to [fourseven to use Dart](https://github.com/Meteor-Community-Packages/meteor-scss/pull/296) in the pipeline.
 
+## Environment variables
+To load environment variables from the .env file (which should never be checked into git or GitHub!) run the app by running the bash script run_meteor.sh.
+
 ## Linting
 The following linters should be installed globally in your development environment:
 
