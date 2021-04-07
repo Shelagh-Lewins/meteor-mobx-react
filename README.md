@@ -7,7 +7,7 @@ This is a testbed project to combine the following technologies:
 * Material UI 4.11.3
 * SCSS via fourseven:scss@4.12.0
 
-These instructions worked for me in April 2021. However beware any future reader, you will likely find things work differently in the future.
+These instructions worked for me in April 2021, though they likely have ommissions - check package.json for dependencies. However beware any future reader, you will likely find things work differently as soon as new versions are released.
 
 ## Meteor
 The initial app is created using a command line option which creates a Meteor app with React and Typescript:
@@ -53,6 +53,15 @@ And I added a link to the Roboto font in the head of main.html:
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
 ```
 
+And the meta tag to fix mobile view:
+
+```
+	<meta
+		name="viewport"
+		content="minimum-scale=1, initial-scale=1, width=device-width"
+	/>
+```
+
 
 ## SASS
 Why use SASS if you're already using Material UI? Material UI is great for the MUI elements like Buttons, but is not elegant for nesting and general styling of your site, and SASS has loads of other great features like variables. I suggest using Material UI for anything that you'd typically include in a UI module, and SASS for anything more general to your site.
@@ -67,7 +76,7 @@ meteor add fourseven:scss
 fourseven uses node-sass, not dart-sass, and therefore doesn't support the newer @use syntax. You have to use the now discouraged @import. There is a promised upgrade to [fourseven to use Dart](https://github.com/Meteor-Community-Packages/meteor-scss/pull/296) in the pipeline.
 
 ## Linting
-The following linters are configured for this project and should be installed globally in your development environment:
+The following linters should be installed globally in your development environment:
 
 ```
 npm install -g sass-lint
@@ -82,3 +91,11 @@ It seemed that sass-lint also needs to be a package dependency:
 ```
 npm i --save-dev sass-lint
 ```
+
+The following Sublime Text plugins are required:
+
+* Sass
+* Sublime Linter
+* SublimeLinter-contrib-htmlhint
+* SublimeLinter-contrib-sass-lint
+* SublimeLinter-eslint
