@@ -1,5 +1,5 @@
 {
-  "name": "typescript-test",
+  "name": "2021-meteor-tech-investigation",
   "private": true,
   "scripts": {
     "start": "meteor run",

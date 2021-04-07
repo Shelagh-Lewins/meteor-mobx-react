@@ -20,14 +20,14 @@ const Hello: React.FunctionComponent = () => {
 	const [counter, setCounter] = useState(0);
 
 	// Typescript
-	const message: string = `A variable message to demonstrate typeing. Counter: ${counter}`;
+	const message: string = `A variable message to demonstrate typing. Counter: ${counter}`;
 
 	const increment = () => {
 		setCounter(counter + 1);
 	};
 
 	useEffect(() => {
-		document.title = `Typescript test | counter: ${counter}`;
+		document.title = `Counter: ${counter}`;
 	}, [counter]);
 
 	const classes = useStyles();
