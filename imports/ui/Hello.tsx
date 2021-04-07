@@ -20,24 +20,26 @@ const Hello: React.FunctionComponent = () => {
 	const [counter, setCounter] = useState(0);
 
 	// Typescript
-	const message: string = 'Hello, World!';
-	console.log(message);
+	const message: string = `A variable message to demonstrate typeing. Counter: ${counter}`;
 
 	const increment = () => {
 		setCounter(counter + 1);
 	};
 
 	useEffect(() => {
-		document.title = `You clicked ${counter} times`;
+		document.title = `Typescript test | counter: ${counter}`;
 	}, [counter]);
 
 	const classes = useStyles();
 
 	return (
-		<div>
+		<div className="panel">
+			<p>An IconButton from Material UI:</p>
 			<IconButton onClick={increment} color="primary" title="Click Me"><TouchApp /></IconButton>
+			<p>A Button from Material UI with an Icon inside it:</p>
 			<Button onClick={increment} className={classes.root}><TouchApp />Click Me</Button>
-			<p>You&apos;ve pressed the button {counter} times.</p>
+			<p>You&apos;ve pressed a button {counter} times</p>
+			<p>Message: {message}</p>
 		</div>
 	);
 };

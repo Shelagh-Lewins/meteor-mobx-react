@@ -1,8 +1,15 @@
+// meteor fourseven:scss doesn't support dart-sass so we can't use @use
+@import 'variables';
+
 body {
+	background-color: $color-body-background;
 	font-family: sans-serif;
 	padding: 10px;
 
-	div {
-		border: 1px solid gray;
+	.panel {
+		background-color: $color-panel-background;
+		border-radius: 4px;
+		margin-bottom: 8px;
+		padding: 8px;
 	}
 }

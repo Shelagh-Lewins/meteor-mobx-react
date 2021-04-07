@@ -12,7 +12,7 @@ const Info: React.FunctionComponent = () => {
 	);
 
 	return (
-		<div>
+		<div className="panel">
 			<h2>Learn Meteor!</h2>
 			<ul>{links.map(makeLink)}</ul>
 		</div>
