@@ -36,5 +36,6 @@
   "exclude": [
     "./.meteor/**",
     "./packages/**"
-  ]
+  ],
+  "useDefineForClassFields": true
 }
