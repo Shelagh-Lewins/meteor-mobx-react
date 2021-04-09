@@ -1,14 +1,15 @@
 import { Meteor } from 'meteor/meteor';
-import { LinksCollection } from '../imports/api/links.ts';
+import { Links } from '../imports/api/Links/links.ts';
 import './methods.ts';
+import '../imports/api/Links/links_publications.ts';
 
 function insertLink(title: string, url: string) {
-	LinksCollection.insert({ title, url, 'createdAt': new Date() });
+	Links.insert({ title, url, 'createdAt': new Date() });
 }
 
 Meteor.startup(() => {
 	// If the Links collection is empty, add some data.
-	if (LinksCollection.find().count() === 0) {
+	if (Links.find().count() === 0) {
 		insertLink(
 			'Do the Tutorial',
 			'https://www.meteor.com/tutorials/react/creating-an-app',

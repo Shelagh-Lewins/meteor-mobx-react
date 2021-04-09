@@ -1,9 +1,13 @@
 import React from 'react';
-import { useTracker } from 'meteor/react-meteor-data';
-import { LinksCollection, Link } from '../api/links.ts';
+// import { useTracker } from 'meteor/react-meteor-data';
 
-const Info: React.FunctionComponent = () => {
-	const links = useTracker(() => LinksCollection.find().fetch());
+import PropTypes, { InferProps } from 'prop-types';
+import { Link } from '../api/Links/links.ts';
+
+type ownPropTypes = InferProps<CounterView.propTypes>;
+
+const Info: React.FunctionComponent = ({ links }: ownPropTypes) => {
+	// const links = useTracker(() => Links.find().fetch());
 
 	const makeLink = (link: Link) => (
 		<li key={link._id}>
@@ -17,6 +21,10 @@ const Info: React.FunctionComponent = () => {
 			<ul>{links.map(makeLink)}</ul>
 		</div>
 	);
+};
+
+Info.propTypes = {
+	'links': PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default Info;

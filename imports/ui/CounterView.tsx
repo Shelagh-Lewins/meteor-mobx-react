@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Button } from '@material-ui/core';
 import PropTypes, { InferProps } from 'prop-types';
+import CounterButton from './CounterButton.tsx';
 
 type ownPropTypes = InferProps<CounterView.propTypes>;
 
@@ -16,9 +16,11 @@ const CounterView: React.FunctionComponent = ({ store }: ownPropTypes) => {
 
 	return (
 		<div className="panel">
-			<h2>Mobx test</h2>
+			<h2>Counter</h2>
+			<p>The counter value is taken from the Mobx store. You can click any button.</p>
 			<div>Count: {count}</div>
-			<Button onClick={handleClick} variant="contained" color="primary">Add to count</Button>
+			<CounterButton store={store} text="Click me first!" />
+			<CounterButton store={store} text="No, click me!" />
 		</div>
 	);
 };
@@ -27,7 +29,6 @@ const CounterView: React.FunctionComponent = ({ store }: ownPropTypes) => {
 CounterView.propTypes = {
 	'store': PropTypes.shape({
 		'count': PropTypes.number,
-		'increaseCounter': PropTypes.func,
 	}).isRequired,
 };
 
