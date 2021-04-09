@@ -1,9 +1,6 @@
-// import {Meteor} from 'meteor/meteor';
 import {
 	extendObservable,
 	action,
-	toJS,
-	map,
 } from 'mobx';
 import ReactiveDataManager from './ReactiveDataManager.ts';
 
