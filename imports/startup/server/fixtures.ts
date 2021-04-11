@@ -48,7 +48,7 @@ Meteor.startup(() => {
 
 	// if the comments collection is empty, add some data
 	if (Comments.find().count() === 0) {
-		let count = 0;
+		let count = 1;
 
 		Links.find().fetch().forEach((link) => {
 			numberOfComments = getRandomInt(1, 5);

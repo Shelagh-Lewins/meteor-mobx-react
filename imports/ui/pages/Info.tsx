@@ -10,7 +10,6 @@ type ownPropTypes = InferProps<CounterView.propTypes>;
 
 const Info: React.FunctionComponent = ({
 	addCommentFilterValue,
-	comments,
 	linksLoading,
 	linksWithComments,
 	showCommentsMap,
@@ -27,7 +26,7 @@ const Info: React.FunctionComponent = ({
 		return (
 			<li key={link._id}>
 				<a href={link.url} target="_blank" rel="noreferrer">{link.title}</a>
-				<Button onClick={() => handleClick(link._id)}>{buttonIcon}{showComments ? 'Hide comments' : 'Show comments'}</Button>
+				<Button onClick={() => handleClick(link._id)} title={showComments ? 'Hide comments' : 'Show comments'}>{buttonIcon}</Button>
 				{showComments && (
 					<ul>
 						{link.comments.map((comment) => <li key={comment._id}>{comment.text}</li>)}
@@ -48,7 +47,6 @@ const Info: React.FunctionComponent = ({
 
 Info.propTypes = {
 	'addCommentFilterValue': PropTypes.func.isRequired,
-	'comments': PropTypes.arrayOf(PropTypes.any).isRequired,
 	'linksLoading': PropTypes.bool.isRequired,
 	'linksWithComments': PropTypes.arrayOf(PropTypes.any).isRequired,
 	'showCommentsMap': PropTypes.objectOf(PropTypes.any).isRequired,

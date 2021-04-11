@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { computed, toJS } from 'mobx';
+import { toJS } from 'mobx';
 import PropTypes from 'prop-types';
 
 import Info from './pages/Info.tsx';
@@ -11,11 +11,8 @@ import CounterStore from '../api/client/CounterStore.tsx';
 const store = new CounterStore();
 
 const App = observer(class App extends React.Component {
-	handleAddClick() {
-		// this.props.route.state.addExample();
-	}
-
 	render() {
+		// get the reactive data from state
 		const {
 			addCommentFilterValue,
 			comments,
@@ -26,7 +23,7 @@ const App = observer(class App extends React.Component {
 		} = toJS(this.props.state); // eslint-disable-line react/destructuring-assignment, react/prop-types
 
 		// construct nested data for components
-		// this seems more efficient than running a filter for each link to find the associated comments
+		// this seems more efficient than running a filter for each link
 		const CommentsByLink = {};
 		comments.forEach((comment) => {
 			if (!CommentsByLink[comment.linkId]) {
@@ -37,15 +34,27 @@ const App = observer(class App extends React.Component {
 		});
 
 		const linksWithComments = links.map((link) => {
-			const newLink = { ...link, 'comments': [] }; // note this is shallow copy!
+			const newLink = { ...link, 'comments': [] }; // this is shallow copy
 
 			if (CommentsByLink[link._id]) {
-				newLink.comments = CommentsByLink[link._id];
+				newLink.comments = CommentsByLink[link._id].sort((a, b) => new Date(b.date) - new Date(a.date));
 			}
 
 			return newLink;
 		});
 
+		// sort on the client as this is a UI decision
+		linksWithComments.sort((a, b) => {
+			if (a.text < b.text) {
+				return -1;
+			}
+			if (a.text > b.text) {
+				return 1;
+			}
+			return 0;
+		});
+
+		// pass the data to components
 		return (
 			<div>
 				<h1>Welcome to Meteor!</h1>
@@ -54,7 +63,6 @@ const App = observer(class App extends React.Component {
 				<h2>Links</h2>
 				<Info
 					addCommentFilterValue={addCommentFilterValue}
-					comments={comments}
 					linksLoading={linksLoading}
 					linksWithComments={linksWithComments}
 					showCommentsMap={showCommentsMap}
