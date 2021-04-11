@@ -47,17 +47,19 @@ Meteor.startup(() => {
 	}
 
 	// if the comments collection is empty, add some data
-	let count = 0;
+	if (Comments.find().count() === 0) {
+		let count = 0;
 
-	Links.find().fetch().forEach((link) => {
-		numberOfComments = getRandomInt(1, 5);
+		Links.find().fetch().forEach((link) => {
+			numberOfComments = getRandomInt(1, 5);
 
-		for (let i = 0; i < numberOfComments; i += 1) {
-			insertComment(
-				`This is comment number ${count}`,
-				link._id,
-			);
-			count += 1;
-		}
-	});
+			for (let i = 0; i < numberOfComments; i += 1) {
+				insertComment(
+					`This is comment number ${count}`,
+					link._id,
+				);
+				count += 1;
+			}
+		});
+	}
 });

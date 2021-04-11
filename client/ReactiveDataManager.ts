@@ -1,4 +1,5 @@
 import { autorun, toJS } from 'mobx';
+import { Comments } from '../imports/api/Comments/comments.ts';
 import { Links } from '../imports/api/Links/links.ts';
 
 // A class for managing Meteor subscriptions based on observed changes in a state store

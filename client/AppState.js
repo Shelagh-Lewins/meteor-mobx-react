@@ -1,7 +1,9 @@
 import {
 	action,
+	computed,
 	extendObservable,
 	observable,
+	observer,
 	// map,
 	toJS,
 } from 'mobx';
@@ -24,11 +26,11 @@ export default class AppState {
 
 			// Comments
 			'showCommentsMap': observable.map(),
-			'toggleShowComments': action((exampleId) => {
-				if (this.showCommentsMap.get(exampleId)) {
-					this.showCommentsMap.set(exampleId, false);
+			'toggleShowComments': action((linkId) => {
+				if (this.showCommentsMap.get(linkId)) {
+					this.showCommentsMap.set(linkId, false);
 				} else {
-					this.showCommentsMap.set(exampleId, true);
+					this.showCommentsMap.set(linkId, true);
 				}
 			}),
 
@@ -39,7 +41,6 @@ export default class AppState {
 				if (!filterArray.includes(linkId)) {
 					filterArray.push(linkId);
 					this.commentFilter = filterArray;
-					this.showCommentsMap.set(linkId, true);
 				}
 			}),
 			'comments': [],
@@ -50,6 +51,9 @@ export default class AppState {
 			'setCommentsLoading': action((boolean) => {
 				this.commentsLoading = boolean;
 			}),
+
+			//get linksWithComments () { return 2*3; },
+			//'linksWithComments': computed(() => this.links),
 		});
 
 		/* FUNCTIONS TO CALL METEOR METHODS */
@@ -57,6 +61,8 @@ export default class AppState {
 		this.addExample = () => {
 			Meteor.call('addLink');
 		};
+
+		//'linksWithComments': computed(() => observable(this.links));
 
 		/* REACTIVE DATA MANAGEMENT */
 		this.dataManager = new ReactiveDataManager(this);
