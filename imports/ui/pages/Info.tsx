@@ -6,15 +6,16 @@ import RemoveCircle from '@material-ui/icons/RemoveCircle';
 
 import { Link } from '../../api/Links/links.ts';
 
-type ownPropTypes = InferProps<CounterView.propTypes>;
+type ownPropTypes = InferProps<Info.propTypes>;
 
-const Info: React.FunctionComponent = ({
-	addCommentFilterValue,
-	linksLoading,
-	linksWithComments,
-	showCommentsMap,
-	toggleShowComments,
-}: ownPropTypes) => {
+const Info: React.FunctionComponent = ({ linksWithComments, store }: ownPropTypes) => {
+	const {
+		addCommentFilterValue,
+		linksLoading,
+		showCommentsMap,
+		toggleShowComments,
+	} = store;
+
 	handleClick = (linkId: string) => {
 		addCommentFilterValue(linkId);
 		toggleShowComments(linkId);
@@ -46,11 +47,13 @@ const Info: React.FunctionComponent = ({
 };
 
 Info.propTypes = {
-	'addCommentFilterValue': PropTypes.func.isRequired,
-	'linksLoading': PropTypes.bool.isRequired,
+	'store': PropTypes.shape({
+		'addCommentFilterValue': PropTypes.func.isRequired,
+		'linksLoading': PropTypes.bool.isRequired,
+		'showCommentsMap': PropTypes.objectOf(PropTypes.any).isRequired,
+		'toggleShowComments': PropTypes.func.isRequired,
+	}).isRequired,
 	'linksWithComments': PropTypes.arrayOf(PropTypes.any).isRequired,
-	'showCommentsMap': PropTypes.objectOf(PropTypes.any).isRequired,
-	'toggleShowComments': PropTypes.func.isRequired,
 };
 
 export default Info;

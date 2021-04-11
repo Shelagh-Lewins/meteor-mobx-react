@@ -6,21 +6,17 @@ import PropTypes from 'prop-types';
 import Info from './pages/Info.tsx';
 import Env from './pages/Env.tsx';
 import CounterView from './components/CounterView.tsx';
-import CounterStore from '../api/client/CounterStore.tsx';
 
-const store = new CounterStore();
+// each UI component is passed the entire relevant store, because it will make updating the component easier as new store properties are added
 
 const App = observer(class App extends React.Component {
 	render() {
+		const { counterStore, linksStore, pageStore } = this.props.state; // eslint-disable-line react/destructuring-assignment, react/prop-types
 		// get the reactive data from state
 		const {
-			addCommentFilterValue,
 			comments,
 			links,
-			linksLoading,
-			showCommentsMap,
-			toggleShowComments,
-		} = toJS(this.props.state); // eslint-disable-line react/destructuring-assignment, react/prop-types
+		} = toJS(linksStore);
 
 		// construct nested data for components
 		// this seems more efficient than running a filter for each link
@@ -59,16 +55,13 @@ const App = observer(class App extends React.Component {
 			<div>
 				<h1>Welcome to Meteor!</h1>
 				<p>This text app explores a range of technologies in combination.</p>
-				<CounterView store={store} />
+				<CounterView store={counterStore} />
 				<h2>Links</h2>
 				<Info
-					addCommentFilterValue={addCommentFilterValue}
-					linksLoading={linksLoading}
 					linksWithComments={linksWithComments}
-					showCommentsMap={showCommentsMap}
-					toggleShowComments={toggleShowComments}
+					store={toJS(linksStore)}
 				/>
-				<Env />
+				<Env store={pageStore} />
 			</div>
 		);
 	}

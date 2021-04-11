@@ -1,16 +1,14 @@
 import {
 	action,
-	computed,
 	extendObservable,
 	observable,
-	observer,
-	// map,
 	toJS,
 } from 'mobx';
-import ReactiveDataManager from './ReactiveDataManager.ts';
+import ReactiveDataManager from '../../../client/ReactiveDataManager.ts';
+import type RootStore from './RootStore.tsx'; // avoid circular dependency
 
-export default class AppState {
-	constructor() {
+export default class LinksStore {
+	constructor(rootStore: RootStore) {
 		/* MOBX STATE */
 		extendObservable(this, {
 			// Links
@@ -51,18 +49,15 @@ export default class AppState {
 			'setCommentsLoading': action((boolean) => {
 				this.commentsLoading = boolean;
 			}),
-
-			//get linksWithComments () { return 2*3; },
-			//'linksWithComments': computed(() => this.links),
 		});
 
+		this.rootStore = rootStore; // allows stores to know about each other
+
 		/* FUNCTIONS TO CALL METEOR METHODS */
-		// calls Meteor to add a new example
+		// calls Meteor to add a new example (the method doesn't actually exist but this shows how it would be used)
 		this.addExample = () => {
 			Meteor.call('addLink');
 		};
-
-		//'linksWithComments': computed(() => observable(this.links));
 
 		/* REACTIVE DATA MANAGEMENT */
 		this.dataManager = new ReactiveDataManager(this);

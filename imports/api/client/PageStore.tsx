@@ -1,17 +1,21 @@
 import { makeAutoObservable } from 'mobx';
 import type RootStore from './RootStore.tsx'; // avoid circular dependency
 
-class CounterStore {
-	count = 0
+class PageStore {
+	myEnvVar = ''
 
 	constructor(rootStore: RootStore) {
 		makeAutoObservable(this);
 		this.rootStore = rootStore; // allows stores to know about each other
+
+		Meteor.call('env.get_MY_ENV_VAR', (error, result) => {
+			this.setMyEnvVar(result);
+		});
 	}
 
-	increaseCounter(): void {
-		this.rootStore.counterStore.count += 1;
+	setMyEnvVar(text: string): void {
+		this.rootStore.pageStore.myEnvVar = text;
 	}
 }
 
-export default CounterStore;
+export default PageStore;

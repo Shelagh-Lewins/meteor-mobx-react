@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes, { InferProps } from 'prop-types';
 
-const Env: React.FunctionComponent = () => {
-	const [envVar, setEnvVar] = useState('');
+type ownPropTypes = InferProps<Env.propTypes>;
 
-	Meteor.call('env.get_MY_ENV_VAR', (error, result) => {
-		setEnvVar(result);
-	});
+const Env: React.FunctionComponent = ({ store }: ownPropTypes) => {
+	const { myEnvVar } = store;
 
 	return (
 		<div className="panel">
 			<h2>Display an environment variable</h2>
-			<p>Thie environment variable is specified in a file .env on the server and loaded in this component by a Method call.</p>
-			<p>Value of MY_ENV_VAR: &quot;{envVar}&quot;</p>
+			<p>Thie environment variable is specified in a file .env on the server and loaded by a Method call.</p>
+			<p>Value of MY_ENV_VAR: &quot;{myEnvVar}&quot;</p>
 		</div>
 	);
+};
+
+Env.propTypes = {
+	'store': PropTypes.shape({
+		'myEnvVar': PropTypes.string,
+	}).isRequired,
 };
 
 export default Env;

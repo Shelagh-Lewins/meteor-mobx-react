@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import PropTypes, { InferProps } from 'prop-types';
 import CounterButton from './CounterButton.tsx';
 
@@ -32,4 +31,4 @@ CounterView.propTypes = {
 	}).isRequired,
 };
 
-export default observer(CounterView);
+export default CounterView;
