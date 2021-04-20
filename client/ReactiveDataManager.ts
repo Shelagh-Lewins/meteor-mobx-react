@@ -2,6 +2,10 @@ import { autorun, toJS } from 'mobx';
 import { Comments } from '../imports/api/Comments/comments.ts';
 import { Links } from '../imports/api/Links/links.ts';
 
+// based on this example:
+// https://medium.com/@swalta/adventures-with-react-mobx-and-meteor-605a133460b3#.530jkvrkw
+// updated for newer versions and extended
+
 // A class for managing Meteor subscriptions based on observed changes in a state store
 export default class ReactiveDataManager {
 	// state - a Mobx store instance
@@ -12,8 +16,6 @@ export default class ReactiveDataManager {
 
 		// a Mobx autorun function for fetching Links data
 		autorun(() => {
-			// const linksDataManager = autorun(() => {
-			// const linksDataManager = autorun((state) => { // not sure if state should be provided here, it is already available in upper scope
 			// reusable method for updating the state store with fresh data
 			const refreshLinks = () => {
 				const refreshedLinks = Links.find().fetch();
