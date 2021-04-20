@@ -7,64 +7,49 @@ import Info from './pages/Info.tsx';
 import Env from './pages/Env.tsx';
 import CounterView from './components/CounterView.tsx';
 
+import { LinksProvider } from '../api/client/linksContext.tsx';
+
 // each UI component is passed the entire relevant store, because it will make updating the component easier as new store properties are added
+const App: React.FunctionComponent = observer(({ state }: ownPropTypes) => {
+	const { counterStore, linksStore, pageStore } = state; // pass the data to components
 
-const App = observer(class App extends React.Component {
-	render() {
-		const { counterStore, linksStore, pageStore } = this.props.state; // eslint-disable-line react/destructuring-assignment, react/prop-types
-		// get the reactive data from state
-		const {
-			comments,
-			links,
-		} = toJS(linksStore);
+	// build the React context to supply links data (provided by the MongoDB database) to any child component
+	// ideally we would pass state directly as context, but then each component would need to convert the simple values to JS.
+	// I prefer to keep all knowledge of the Mobx store's internal workings here at the top of the component tree.
 
-		// construct nested data for components
-		// this seems more efficient than running a filter for each link
-		const CommentsByLink = {};
-		comments.forEach((comment) => {
-			if (!CommentsByLink[comment.linkId]) {
-				CommentsByLink[comment.linkId] = [];
-			}
+	// simple values
+	const {
+		linksLoading,
+		showCommentsMap,
+	} = toJS(linksStore);
 
-			CommentsByLink[comment.linkId].push(comment);
-		});
+	// actions and getters
+	const {
+		addCommentFilterValue,
+		linksWithComments,
+		toggleShowComments,
+	} = linksStore;
 
-		const linksWithComments = links.map((link) => {
-			const newLink = { ...link, 'comments': [] }; // this is shallow copy
+	const linksContext = {
+		linksLoading,
+		showCommentsMap,
+		addCommentFilterValue,
+		linksWithComments,
+		toggleShowComments,
+	};
 
-			if (CommentsByLink[link._id]) {
-				newLink.comments = CommentsByLink[link._id].sort((a, b) => new Date(b.date) - new Date(a.date));
-			}
-
-			return newLink;
-		});
-
-		// sort on the client as this is a UI decision
-		linksWithComments.sort((a, b) => {
-			if (a.text < b.text) {
-				return -1;
-			}
-			if (a.text > b.text) {
-				return 1;
-			}
-			return 0;
-		});
-
-		// pass the data to components
-		return (
-			<div>
-				<h1>Welcome to Meteor!</h1>
-				<p>This text app explores a range of technologies in combination.</p>
-				<CounterView store={counterStore} />
-				<h2>Links</h2>
-				<Info
-					linksWithComments={linksWithComments}
-					store={toJS(linksStore)}
-				/>
-				<Env store={pageStore} />
-			</div>
-		);
-	}
+	return (
+		<div>
+			<h1>Welcome to the great test app!</h1>
+			<p>This text app explores a range of technologies in combination: Meteor, React, Mobx, Typescript, Material UI.</p>
+			<CounterView store={counterStore} />
+			<h2>Links</h2>
+			<LinksProvider value={linksContext}>
+				<Info	/>
+			</LinksProvider>
+			<Env store={pageStore} />
+		</div>
+	);
 });
 
 App.propTypes = {

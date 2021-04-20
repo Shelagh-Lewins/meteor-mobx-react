@@ -1,20 +1,21 @@
-import React from 'react';
-import PropTypes, { InferProps } from 'prop-types';
+import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import AddCircle from '@material-ui/icons/AddCircle';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
+import LinksContext from '../../api/client/linksContext.tsx';
 
 import { Link } from '../../api/Links/links.ts';
 
-type ownPropTypes = InferProps<Info.propTypes>;
+const Info: React.FunctionComponent = () => {
+	const linksContext = useContext(LinksContext);
 
-const Info: React.FunctionComponent = ({ linksWithComments, store }: ownPropTypes) => {
 	const {
 		addCommentFilterValue,
 		linksLoading,
+		linksWithComments,
 		showCommentsMap,
 		toggleShowComments,
-	} = store;
+	} = linksContext;
 
 	handleClick = (linkId: string) => {
 		addCommentFilterValue(linkId);
@@ -44,16 +45,6 @@ const Info: React.FunctionComponent = ({ linksWithComments, store }: ownPropType
 			{linksLoading && <div>Loading data...</div>}
 		</div>
 	);
-};
-
-Info.propTypes = {
-	'store': PropTypes.shape({
-		'addCommentFilterValue': PropTypes.func.isRequired,
-		'linksLoading': PropTypes.bool.isRequired,
-		'showCommentsMap': PropTypes.objectOf(PropTypes.any).isRequired,
-		'toggleShowComments': PropTypes.func.isRequired,
-	}).isRequired,
-	'linksWithComments': PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default Info;

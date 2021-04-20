@@ -4,8 +4,6 @@ import CounterButton from './CounterButton.tsx';
 
 type ownPropTypes = InferProps<CounterView.propTypes>;
 
-// A function component wrapped with `observer` will react
-// to any future change in an observable it used before.
 const CounterView: React.FunctionComponent = ({ store }: ownPropTypes) => {
 	const { count } = store;
 

@@ -31,6 +31,7 @@ export default class ReactiveDataManager {
 
 			// create a new Meteor subscription
 			state.setLinksLoading(true);
+
 			this.linksSubscription = Meteor.subscribe('links', {
 
 				// callback when the Meteor subscription is ready
