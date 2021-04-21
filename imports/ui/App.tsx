@@ -44,6 +44,7 @@ const App: React.FunctionComponent = observer(({ state }: ownPropTypes) => {
 		<div>
 			<h1>Welcome to a Meteor-Mobx-React test app!</h1>
 			<p>This text app explores a range of technologies in combination: Meteor, React, Mobx, Typescript, and Material UI.</p>
+			<p>It has been adapted from <a href="https://github.com/tomswales/react_mobx_meteor_mongo" target="_blank" rel="noreferrer">Tom Swales&apos; example</a>. I&apos;ve updated the Mobx version and added some extras such as using React Context.</p>
 			<p>Each section below demonstrates a different use of the Mobx store.</p>
 			<CounterView store={counterStore} />
 			<LinksProvider value={linksContext}>
