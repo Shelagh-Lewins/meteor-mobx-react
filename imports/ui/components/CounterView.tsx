@@ -14,7 +14,8 @@ const CounterView: React.FunctionComponent = ({ store }: ownPropTypes) => {
 	return (
 		<div className="panel">
 			<h2>Counter</h2>
-			<p>The counter value is taken from the Mobx store. You can click any button.</p>
+			<p>This section demonstrates a simple client-only interaction with the Mobx store.</p>
+			<p>The counter value is taken from the Mobx Counter store. Click either button to increment the count.</p>
 			<div>Count: {count}</div>
 			<CounterButton store={store} text="Click me first!" />
 			<CounterButton store={store} text="No, click me!" />

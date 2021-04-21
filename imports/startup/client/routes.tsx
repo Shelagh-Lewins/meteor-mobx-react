@@ -7,7 +7,6 @@ import {
 
 // route components
 import App from '../../ui/App.tsx';
-// import NotFound from '../../ui/components/NotFound.jsx';
 
 const renderRoutes = (state: Class): void => (
 	<Router>

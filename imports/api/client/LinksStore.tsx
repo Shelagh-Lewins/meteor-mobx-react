@@ -5,10 +5,9 @@ import {
 } from 'mobx';
 import ReactiveDataManager from '../../../client/ReactiveDataManager.ts';
 import type RootStore from './RootStore.tsx'; // avoid circular dependency
+import { LinkInterface } from '../Links/links.ts';
 
 export default class LinksStore {
-	// dataManager = new ReactiveDataManager(this);
-
 	linksLoading = false;
 
 	links = [];
@@ -59,6 +58,13 @@ export default class LinksStore {
 
 	setCommentsLoading = (commentsLoading: boolean): void => {
 		this.commentsLoading = commentsLoading;
+	};
+
+	addLink = ({
+		title,
+		url,
+	}: LinkInterface): void => {
+		Meteor.call('links.add', { title, url });
 	};
 
 	get linksWithComments(): array {

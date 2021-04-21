@@ -3,8 +3,8 @@ import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import PropTypes from 'prop-types';
 
-import Info from './pages/Info.tsx';
-import Env from './pages/Env.tsx';
+import LinksView from './components/LinksView.tsx';
+import EnvView from './components/EnvView.tsx';
 import CounterView from './components/CounterView.tsx';
 
 import { LinksProvider } from '../api/client/linksContext.tsx';
@@ -26,6 +26,7 @@ const App: React.FunctionComponent = observer(({ state }: ownPropTypes) => {
 	// actions and getters
 	const {
 		addCommentFilterValue,
+		addLink,
 		linksWithComments,
 		toggleShowComments,
 	} = linksStore;
@@ -34,20 +35,21 @@ const App: React.FunctionComponent = observer(({ state }: ownPropTypes) => {
 		linksLoading,
 		showCommentsMap,
 		addCommentFilterValue,
+		addLink,
 		linksWithComments,
 		toggleShowComments,
 	};
 
 	return (
 		<div>
-			<h1>Welcome to the great test app!</h1>
-			<p>This text app explores a range of technologies in combination: Meteor, React, Mobx, Typescript, Material UI.</p>
+			<h1>Welcome to a Meteor-Mobx-React test app!</h1>
+			<p>This text app explores a range of technologies in combination: Meteor, React, Mobx, Typescript, and Material UI.</p>
+			<p>Each section below demonstrates a different use of the Mobx store.</p>
 			<CounterView store={counterStore} />
-			<h2>Links</h2>
 			<LinksProvider value={linksContext}>
-				<Info	/>
+				<LinksView	/>
 			</LinksProvider>
-			<Env store={pageStore} />
+			<EnvView store={pageStore} />
 		</div>
 	);
 });

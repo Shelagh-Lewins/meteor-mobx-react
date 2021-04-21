@@ -1,13 +1,13 @@
 import SimpleSchema from 'simpl-schema';
 
-export interface Link {
+export interface LinkInterface {
 	_id?: string;
 	title: string;
 	url: string;
-	createdAt: Date;
+	createdAt?: Date;
 }
 
-export const Links = new Mongo.Collection<Link>('links');
+export const Links = new Mongo.Collection<LinkInterface>('links');
 
 // Deny all client-side updates on the Lists collection
 Links.deny({
@@ -19,6 +19,7 @@ Links.deny({
 Links.schema = new SimpleSchema({
 	'createdAt': Date,
 	'title': String,
+	'url': String,
 });
 
 Links.attachSchema(Links.schema);
