@@ -30,6 +30,7 @@ const CounterButton: React.FunctionComponent = ({ store, text = 'Click me' }: ow
 	const classes = useStyles();
 
 	handleClick = () => {
+		//console.log('clicked', store.count);
 		store.increaseCounter(); // keep 'this' context
 	};
 

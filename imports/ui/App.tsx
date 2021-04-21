@@ -1,21 +1,28 @@
 import React from 'react';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+} from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
-import PropTypes from 'prop-types';
 
-import LinksView from './components/LinksView.tsx';
-import EnvView from './components/EnvView.tsx';
-import CounterView from './components/CounterView.tsx';
+// route components
+import Navbar from './components/Navbar.tsx';
+import Home from './containers/Home.tsx';
+import SimpleState from './containers/SimpleState.tsx';
+import ReactiveData from './containers/ReactiveData.tsx';
+import EnvVar from './containers/EnvVar.tsx';
 
 import { LinksProvider } from '../api/client/linksContext.tsx';
 
-// each UI component is passed the entire relevant store, because it will make updating the component easier as new store properties are added
-const App: React.FunctionComponent = observer(({ state }: ownPropTypes) => {
+const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTypes) => {
 	const { counterStore, linksStore, pageStore } = state; // pass the data to components
 
 	// build the React context to supply links data (provided by the MongoDB database) to any child component
-	// ideally we would pass state directly as context, but then each component would need to convert the simple values to JS.
+	// ideally we would pass state directly as context, but then each component would need to convert values to JS.
 	// I prefer to keep all knowledge of the Mobx store's internal workings here at the top of the component tree.
+	// however BE WARNED this will likely interfere with context
 
 	// simple values
 	const {
@@ -41,22 +48,27 @@ const App: React.FunctionComponent = observer(({ state }: ownPropTypes) => {
 	};
 
 	return (
-		<div>
-			<h1>Welcome to a Meteor-Mobx-React test app!</h1>
-			<p>This text app explores a range of technologies in combination: Meteor, React, Mobx, Typescript, and Material UI.</p>
-			<p>It has been adapted from <a href="https://github.com/tomswales/react_mobx_meteor_mongo" target="_blank" rel="noreferrer">Tom Swales&apos; example</a>. I&apos;ve updated the Mobx version and added some extras such as using React Context.</p>
-			<p>Each section below demonstrates a different use of the Mobx store.</p>
-			<CounterView store={counterStore} />
-			<LinksProvider value={linksContext}>
-				<LinksView	/>
-			</LinksProvider>
-			<EnvView store={pageStore} />
-		</div>
+		<LinksProvider value={linksContext}>
+			<div className="app-container">
+				<Navbar	/>
+				<div className="main-container">
+					<Route exact path="/" component={Home} />
+					<Route exact path="/reactive-data" component={ReactiveData} />
+					<Route exact path="/simple-state" render={() => <SimpleState store={counterStore} />} />
+					<Route exact path="/env-var" render={() => <EnvVar store={pageStore} />} />
+				</div>
+			</div>
+		</LinksProvider>
 	);
 });
 
-App.propTypes = {
-	'state': PropTypes.objectOf(PropTypes.any).isRequired,
-};
+// This construction allows us to use different containers for different groups of routers, for example a print-friendly view would not show menus
+const renderApp = (state: Class): void => (
+	<Router>
+		<Switch>
+			<Route render={() => <DefaultContainer state={state} />} />
+		</Switch>
+	</Router>
+);
 
-export default App;
+export default renderApp;

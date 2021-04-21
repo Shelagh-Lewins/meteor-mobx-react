@@ -4,7 +4,7 @@ import {
 	toJS,
 } from 'mobx';
 import ReactiveDataManager from '../../../client/ReactiveDataManager.ts';
-import type RootStore from './RootStore.tsx'; // avoid circular dependency
+import type RootStoreType from './RootStore.tsx'; // avoid circular dependency
 import { LinkInterface } from '../Links/links.ts';
 
 export default class LinksStore {
@@ -12,7 +12,7 @@ export default class LinksStore {
 
 	links = [];
 
-	rootStore = rootStore1; // allows stores to know about each other
+	rootStore = rootStore; // allows stores to know about each other
 
 	showCommentsMap = observable.map();
 
@@ -20,7 +20,7 @@ export default class LinksStore {
 
 	comments = [];
 
-	constructor(rootStore1: RootStore) {
+	constructor(rootStore: RootStoreType) {
 		makeAutoObservable(this);
 		this.dataManager = new ReactiveDataManager(this);
 	}

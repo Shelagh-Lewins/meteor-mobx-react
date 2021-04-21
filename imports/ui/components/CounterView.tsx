@@ -1,15 +1,13 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import PropTypes, { InferProps } from 'prop-types';
 import CounterButton from './CounterButton.tsx';
 
 type ownPropTypes = InferProps<CounterView.propTypes>;
 
-const CounterView: React.FunctionComponent = ({ store }: ownPropTypes) => {
+const CounterView: React.FunctionComponent = observer(({ store }: ownPropTypes) => {
 	const { count } = store;
-
-	handleClick = () => {
-		store.increaseCounter(); // keep 'this' context
-	};
+	//console.log('view', store.count);
 
 	return (
 		<div className="panel">
@@ -21,7 +19,7 @@ const CounterView: React.FunctionComponent = ({ store }: ownPropTypes) => {
 			<CounterButton store={store} text="No, click me!" />
 		</div>
 	);
-};
+});
 
 // with Typescript validation we theoretically don't need PropTypes, but they can catch missing values at runtime e.g. because of a data issue
 CounterView.propTypes = {
