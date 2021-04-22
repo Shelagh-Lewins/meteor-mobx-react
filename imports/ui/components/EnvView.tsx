@@ -1,10 +1,14 @@
-import React from 'react';
-import PropTypes, { InferProps } from 'prop-types';
+import React, { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 
-type ownPropTypes = InferProps<Env.propTypes>;
+import StoreContext from '../../api/client/storeContext.tsx';
 
-const EnvView: React.FunctionComponent = ({ store }: ownPropTypes) => {
-	const { myEnvVar } = store;
+const EnvView: React.FunctionComponent = () => {
+	const storeContext = useContext(StoreContext);
+
+	const {
+		myEnvVar,
+	} = storeContext.pageStore;
 
 	return (
 		<div className="panel">
@@ -16,10 +20,4 @@ const EnvView: React.FunctionComponent = ({ store }: ownPropTypes) => {
 	);
 };
 
-EnvView.propTypes = {
-	'store': PropTypes.shape({
-		'myEnvVar': PropTypes.string,
-	}).isRequired,
-};
-
-export default EnvView;
+export default observer(EnvView);

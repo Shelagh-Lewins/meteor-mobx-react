@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import AddCircle from '@material-ui/icons/AddCircle';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
-import LinksContext from '../../api/client/linksContext.tsx';
+import { observer } from 'mobx-react-lite';
 
+import StoreContext from '../../api/client/storeContext.tsx';
 import { LinkInterface } from '../../api/Links/links.ts';
 
 const LinksView: React.FunctionComponent = () => {
-	const linksContext = useContext(LinksContext);
+	const storeContext = useContext(StoreContext);
 
 	const {
 		addCommentFilterValue,
@@ -16,7 +17,7 @@ const LinksView: React.FunctionComponent = () => {
 		linksWithComments,
 		showCommentsMap,
 		toggleShowComments,
-	} = linksContext;
+	} = storeContext.linksStore;
 
 	handleClick = (linkId: string) => {
 		addCommentFilterValue(linkId);
@@ -53,4 +54,4 @@ const LinksView: React.FunctionComponent = () => {
 	);
 };
 
-export default LinksView;
+export default observer(LinksView);
