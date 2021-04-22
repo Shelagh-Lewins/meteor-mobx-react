@@ -41,8 +41,7 @@ const LinksView: React.FunctionComponent = () => {
 	};
 
 	return (
-		<div className="panel">
-			<h2>Links</h2>
+		<>
 			<p>This section demonstrates loading reactive data from the MongoDB database.</p>
 			<p>The links and comments collections are loaded from the database into the Mobx Links store. Nested data (comments on each link) are computed in the Mobx store.</p>
 			<p>Store data, actions and getters are provided to React components via the React context to avoid prop chaining.</p>
@@ -50,7 +49,7 @@ const LinksView: React.FunctionComponent = () => {
 			{!linksLoading && <ul>{linksWithComments.map(makeLink)}</ul>}
 			{linksLoading && <div>Loading data...</div>}
 			<Button onClick={() => addLink({ 'title': 'New dummy link', 'url': '#' })} variant="contained" color="secondary" title="Add link">Add link</Button>
-		</div>
+		</>
 	);
 };
 

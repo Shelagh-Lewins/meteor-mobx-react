@@ -4,7 +4,11 @@
 body {
 	background-color: $color-body-background;
 	font-family: sans-serif;
-	padding: 10px;
+	margin: 0;
+
+	.main-container {
+		padding: 8px;
+	}
 
 	.panel {
 		background-color: $color-panel-background;

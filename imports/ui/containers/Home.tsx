@@ -23,6 +23,7 @@ const Home: React.FunctionComponent = () => {
 			</ul>
 			<p>Click the menu items to see different uses of Mobx state.</p>
 			<p>React context is used to pass the Mobx store to components without prop chaining.</p>
+			<p>The Reactive Data Manager which loads data from the Mongo database has been adapted from <a href="https://medium.com/@swalta/adventures-with-react-mobx-and-meteor-605a133460b3#.530jkvrkw" target="_blank" rel="noreferrer">Tom Swales&apos; example</a>.</p>
 		</div>
 	);
 };

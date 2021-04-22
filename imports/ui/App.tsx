@@ -27,10 +27,14 @@ const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTy
 	</StoreProvider>
 ));
 
+// do not provide context
+// this just demonstrates using different containers
 const HomeContainer: React.FunctionComponent = () => (
 	<div className="app-container">
 		<Navbar	/>
-		<Home />
+		<div className="main-container">
+			<Home />
+		</div>
 	</div>
 );
 

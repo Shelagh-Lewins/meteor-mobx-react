@@ -12,14 +12,13 @@ const CounterView: React.FunctionComponent = () => {
 	} = storeContext.counterStore;
 
 	return (
-		<div className="panel">
-			<h2>Counter</h2>
+		<>
 			<p>This section demonstrates a simple client-only interaction with the Mobx store.</p>
 			<p>The counter value is taken from the Mobx Counter store. Click either button to increment the count.</p>
 			<div>Count: {count}</div>
 			<CounterButton text="Click me first!" />
 			<CounterButton text="No, click me!" />
-		</div>
+		</>
 	);
 };
 
