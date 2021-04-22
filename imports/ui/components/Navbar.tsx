@@ -9,14 +9,26 @@ const useStyles = makeStyles((theme) => ({
 	'root': {
 		'flexGrow': 1,
 	},
+	'toolbar': {
+		'display': 'block',
+		[theme.breakpoints.up('md')]: {
+			'display': 'flex',
+			'flexGrow': 1,
+		},
+	},
 	'menuButton': {
 		'marginRight': theme.spacing(2),
 	},
 	'navLink': {
+		[theme.breakpoints.up('md')]: {
+			'flexGrow': 1,
+			'width': 'unset',
+		},
 		'color': 'inherit',
-		'flexGrow': 1,
+		'display': 'inline-block',
 		'opacity': 0.7,
 		'textDecoration': 'inherit',
+		'width': '100%',
 	},
 	'active': {
 		'opacity': 1,
@@ -48,7 +60,7 @@ const Navbar: React.FunctionComponent = () => {
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
-				<Toolbar>
+				<Toolbar className={classes.toolbar}>
 					{menuItems.map((item) => makeNavLink(item))}
 				</Toolbar>
 			</AppBar>
