@@ -13,31 +13,37 @@ const useStyles = makeStyles((theme) => ({
 		'flexGrow': 1,
 	},
 	'toolbar': {
-		'display': 'none',
-		[theme.breakpoints.up('md')]: {
-			'display': 'flex',
-			'flexGrow': 1,
+		'display': 'flex',
+		'flexGrow': 1,
+		[theme.breakpoints.down('sm')]: {
+			'display': 'none',
 		},
 	},
 	'toolbarOpen': {
-		'display': 'block',
+		[theme.breakpoints.down('sm')]: {
+			'display': 'block',
+			'padding': 0,
+		},
 	},
 	'menuButton': {
-		[theme.breakpoints.up('md')]: {
-			'display': 'none',
-			'marginRight': theme.spacing(2),
+		'display': 'none',
+		'marginRight': theme.spacing(2),
+		[theme.breakpoints.down('sm')]: {
+			'display': 'inline-block',
 		},
 	},
 	'navLink': {
-		[theme.breakpoints.up('md')]: {
-			'flexGrow': 1,
-			'width': 'unset',
-		},
 		'color': 'inherit',
+		'flexGrow': 1,
 		'display': 'inline-block',
 		'opacity': 0.7,
 		'textDecoration': 'inherit',
 		'width': '100%',
+		[theme.breakpoints.down('sm')]: {
+			'backgroundColor': '#fff',
+			'color': '#666',
+			'width': '100%',
+		},
 	},
 	'active': {
 		'opacity': 1,
@@ -71,14 +77,18 @@ const Navbar: React.FunctionComponent = () => {
 		<Link to={path} key={path} className={`${classes.navLink} ${location.pathname === path ? classes.active : ''}`}><Typography variant="h6">{text}</Typography></Link>
 	);
 
+	const makeMenuButton = () => (
+		<Box display="flex" flexDirection="row-reverse">
+			<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => toggleMenu()}>
+				<MenuIcon />
+			</IconButton>
+		</Box>
+	);
+
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
-				<Box display="flex" flexDirection="row-reverse">
-					<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => toggleMenu()}>
-						<MenuIcon />
-					</IconButton>
-				</Box>
+				{makeMenuButton()}
 				<Toolbar className={`${classes.toolbar} ${menuOpen ? classes.toolbarOpen : ''}`}>
 					{menuItems.map((item) => makeNavLink(item))}
 				</Toolbar>
