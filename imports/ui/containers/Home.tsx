@@ -5,9 +5,10 @@ const Home: React.FunctionComponent = () => {
 		'Meteor',
 		'Mobx',
 		'React',
+		'React router',
 		'TypeScript',
 		'Material UI',
-		'React router',
+		'SCSS',
 	];
 
 	makeItem = (item: string) => (

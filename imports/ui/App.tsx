@@ -11,6 +11,7 @@ import Home from './containers/Home.tsx';
 import SimpleState from './containers/SimpleState.tsx';
 import ReactiveData from './containers/ReactiveData.tsx';
 import EnvVar from './containers/EnvVar.tsx';
+import PrintView from './containers/PrintView.tsx';
 
 import { StoreProvider } from '../api/client/storeContext.tsx';
 
@@ -19,6 +20,7 @@ const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTy
 		<div className="app-container">
 			<Navbar	/>
 			<div className="main-container">
+				<Route exact path="/" component={Home} />
 				<Route exact path="/reactive-data" component={ReactiveData} />
 				<Route exact path="/simple-state" component={SimpleState} />
 				<Route exact path="/env-var" component={EnvVar} />
@@ -29,11 +31,10 @@ const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTy
 
 // do not provide context
 // this just demonstrates using different containers
-const HomeContainer: React.FunctionComponent = () => (
+const PrintContainer: React.FunctionComponent = () => (
 	<div className="app-container">
-		<Navbar	/>
 		<div className="main-container">
-			<Home />
+			<PrintView />
 		</div>
 	</div>
 );
@@ -41,7 +42,7 @@ const HomeContainer: React.FunctionComponent = () => (
 const renderApp = (state: Class): void => (
 	<Router>
 		<Switch>
-			<Route exact path="/" component={HomeContainer} />
+			<Route exact path="/print-view" component={PrintContainer} />
 			<Route render={() => <DefaultContainer state={state} />} />
 		</Switch>
 	</Router>
