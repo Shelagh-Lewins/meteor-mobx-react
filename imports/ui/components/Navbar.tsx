@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
 		[theme.breakpoints.up('md')]: {
 			'display': 'none',
 		},
+		'& a': {
+			'color': '#000',
+			'width': '100%',
+		},
 	},
 	'menuOpen': {
 		[theme.breakpoints.down('sm')]: {
@@ -39,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	'toolbarRight': {
 		'display': 'flex',
-		'flexDirection': 'row-reverse',
 		'marginLeft': 'auto',
 	},
 	'homeButton': {
@@ -60,10 +63,6 @@ const useStyles = makeStyles((theme) => ({
 		'display': 'inline-block',
 		'opacity': 0.7,
 		'textDecoration': 'inherit',
-		[theme.breakpoints.down('sm')]: {
-			'color': '#000',
-			'width': '100%',
-		},
 	},
 	'active': {
 		'opacity': 1,
@@ -79,6 +78,10 @@ const Navbar: React.FunctionComponent = () => {
 		{ 'text': 'Reactive data', 'path': '/reactive-data' },
 		{ 'text': 'Simple state', 'path': '/simple-state' },
 		{ 'text': 'Environment variable', 'path': '/env-var' },
+	];
+
+	const accountItems = [
+		{ 'text': 'Register', 'path': '/register' },
 	];
 
 	toggleMenu = () => {
@@ -143,6 +146,7 @@ const Navbar: React.FunctionComponent = () => {
 						{menuItems.map((item) => makeNavLink(item))}
 					</Toolbar>
 					<Toolbar className={classes.toolbarRight}>
+						{accountItems.map((item) => makeNavLink(item))}
 						{makeMenuButton()}
 					</Toolbar>
 				</Box>

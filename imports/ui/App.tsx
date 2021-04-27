@@ -12,6 +12,7 @@ import SimpleState from './containers/SimpleState.tsx';
 import ReactiveData from './containers/ReactiveData.tsx';
 import EnvVar from './containers/EnvVar.tsx';
 import PrintView from './containers/PrintView.tsx';
+import Register from './containers/Register.tsx';
 
 import { StoreProvider } from '../api/client/storeContext.tsx';
 
@@ -24,6 +25,7 @@ const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTy
 				<Route exact path="/reactive-data" component={ReactiveData} />
 				<Route exact path="/simple-state" component={SimpleState} />
 				<Route exact path="/env-var" component={EnvVar} />
+				<Route exact path="/register" component={Register} />
 			</div>
 		</div>
 	</StoreProvider>
