@@ -5,15 +5,23 @@ body {
 	background-color: $color-body-background;
 	font-family: sans-serif;
 	margin: 0;
+}
 
-	.main-container {
-		padding: 8px;
-	}
+.main-container {
+	padding: 8px;
+}
 
-	.panel {
-		background-color: $color-panel-background;
-		border-radius: 4px;
-		margin-bottom: 8px;
-		padding: 8px;
+.panel {
+	background-color: $color-panel-background;
+	border-radius: 4px;
+	margin-bottom: 8px;
+	padding: 8px;
+}
+
+.accounts-form {
+	flex-grow: 1;
+
+	.form-text-field {
+		width: 100%;
 	}
 }
