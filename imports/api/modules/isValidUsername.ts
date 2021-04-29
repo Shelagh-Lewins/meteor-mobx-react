@@ -1,4 +1,7 @@
-// username may not contain spaces
+import {
+	USERNAME_MAX_LENGTH,
+	USERNAME_MIN_LENGTH,
+} from './parameters.ts';
 
 const isValidUsername = (username: string): boolean => {
 	if (!username) {
@@ -9,7 +12,12 @@ const isValidUsername = (username: string): boolean => {
 		return false;
 	}
 
+	// username may not contain spaces
 	if (username.includes(' ')) {
+		return false;
+	}
+
+	if (username.length > USERNAME_MAX_LENGTH || username.length < USERNAME_MIN_LENGTH) {
 		return false;
 	}
 

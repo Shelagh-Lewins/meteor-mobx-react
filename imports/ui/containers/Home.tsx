@@ -6,6 +6,7 @@ const Home: React.FunctionComponent = () => {
 		'Mobx',
 		'React',
 		'React router',
+		'React hook form',
 		'TypeScript',
 		'Material UI',
 		'SCSS',

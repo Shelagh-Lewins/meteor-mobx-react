@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
+import AlertView from './components/AlertView.tsx';
 import Navbar from './components/Navbar.tsx';
 import Home from './containers/Home.tsx';
 import SimpleState from './containers/SimpleState.tsx';
@@ -21,6 +22,7 @@ const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTy
 		<div className="app-container">
 			<Navbar	/>
 			<div className="main-container">
+				{state.pageStore.alert && <AlertView />}
 				<Route exact path="/" component={Home} />
 				<Route exact path="/reactive-data" component={ReactiveData} />
 				<Route exact path="/simple-state" component={SimpleState} />

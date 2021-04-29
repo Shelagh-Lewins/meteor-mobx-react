@@ -7,3 +7,6 @@ import './security.ts';
 // This defines all the collections, publications and methods that the application provides
 // as an API to the client.
 import './register-api.ts';
+
+// set up user accounts and roles
+import './user_accounts.ts';

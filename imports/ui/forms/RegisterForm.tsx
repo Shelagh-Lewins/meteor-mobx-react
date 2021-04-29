@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
 	Button,
@@ -6,21 +6,47 @@ import {
 	TextField,
 	Typography,
 } from '@material-ui/core';
+import { observer } from 'mobx-react';
 
-import isValidEmail from '../../api/modules/isValidEmail.tsx';
-import isValidUsername from '../../api/modules/isValidUsername.tsx';
+import StoreContext from '../../api/client/storeContext.tsx';
+import isValidEmail from '../../api/modules/isValidEmail.ts';
+import isValidPassword from '../../api/modules/isValidPassword.ts';
+import isValidUsername from '../../api/modules/isValidUsername.ts';
+import {
+	USERNAME_MIN_LENGTH,
+	USERNAME_MAX_LENGTH,
+	PASSWORD_MIN_LENGTH,
+	PASSWORD_MAX_LENGTH,
+} from '../../api/modules/parameters.ts';
+import callWithPromise from '../../api/modules/callWithPromise.ts';
 
 import Hint from '../components/Hint.tsx';
 
-const RegisterForm = (): void => {
+const RegisterForm: React.FunctionComponent = (): void => {
 	const {
 		handleSubmit,
 		control,
 		'formState': { errors },
 		getValues,
+		reset,
 		trigger,
-	} = useForm();
-	const handleRegistration = (data) => console.log(data);
+	} = useForm({ 'mode': 'all' }); // 'all' so email and username availability are checked before submit
+
+	const storeContext = useContext(StoreContext);
+	const {
+		createUserAccount,
+	} = storeContext.usersStore;
+	const handleRegistration = async (data) => {
+		await createUserAccount(data);
+
+		// we must supply reset (default) values to avoid an uncontrolled inputs error
+		reset({
+			'username': '',
+			'email': '',
+			'password': '',
+			'confirmPassword': '',
+		});
+	};
 
 	return (
 		// padding overcomes negative margin introduced by grid spacing
@@ -49,14 +75,27 @@ const RegisterForm = (): void => {
 						)}
 						rules={{
 							'required': 'Username is required',
-							'minLength': {
-								'value': 8,
-								'message': 'Username must have at least 8 characters',
+							'maxLength': {
+								'value': USERNAME_MAX_LENGTH,
+								'message': `Username cannot have more than ${USERNAME_MAX_LENGTH} characters`,
 							},
-							'validate': (value) => (isValidUsername(value) ? true : 'Username cannot contain spaces'),
+							'minLength': {
+								'value': USERNAME_MIN_LENGTH,
+								'message': `Username must have at least ${USERNAME_MIN_LENGTH} characters`,
+							},
+							'validate': async (value) => {
+								// check the database to see if the username is in use already
+								const isUsernameAvailable = await callWithPromise('users.isUsernameAvailable', { 'username': value });
+
+								if (!isUsernameAvailable) {
+									return `The username "${value}" is not available`;
+								}
+
+								return isValidUsername(value) ? true : 'Username cannot contain spaces';
+							},
 						}}
 					/>
-					<Hint text="Your username may be seen by other users." />
+					<Hint text="Your username is how other users will see you." />
 				</Grid>
 			</Grid>
 			<Grid container spacing={3}>
@@ -81,7 +120,15 @@ const RegisterForm = (): void => {
 						)}
 						rules={{
 							'required': 'Email address is required',
-							'validate': (value) => (isValidEmail(value) ? true : 'Must be a valid email address'),
+							'validate': async (value) => {
+								const isEmailAvailable = await callWithPromise('users.isEmailAvailable', { 'email': value });
+
+								if (!isEmailAvailable) {
+									return `The email address "${value}" is not available`;
+								}
+
+								return (isValidEmail(value) ? true : 'Must be a valid email address');
+							},
 						}}
 					/>
 					<Hint text="Your email address will not be visible to other users." />
@@ -110,13 +157,17 @@ const RegisterForm = (): void => {
 						)}
 						rules={{
 							'required': 'Password is required',
+							'maxLength': {
+								'value': PASSWORD_MAX_LENGTH,
+								'message': `Password cannot have more than ${PASSWORD_MAX_LENGTH} characters`,
+							},
 							'minLength': {
-								'value': 8,
-								'message': 'Password must have at least 8 characters',
+								'value': PASSWORD_MIN_LENGTH,
+								'message': `Password must have at least ${PASSWORD_MIN_LENGTH} characters`,
 							},
 							'validate': (value) => {
 								trigger('confirmPassword'); // ensure match
-								return true;
+								return isValidPassword(value) ? true : 'Password cannot contain spaces';
 							},
 						}}
 					/>
@@ -166,4 +217,4 @@ const RegisterForm = (): void => {
 		</form>
 	);
 };
-export default RegisterForm;
+export default observer(RegisterForm);

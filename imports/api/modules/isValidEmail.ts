@@ -2,11 +2,6 @@
 // invalid emails may be allowed
 // but no valid emails should be excluded
 
-// only one @ is allowed
-// local part may not start or end with @
-// multiple . are allowed after the @
-// domain may not start or end with .
-
 const isValidEmail = (email: string): boolean => {
 	if (!email) {
 		return false;
@@ -16,16 +11,24 @@ const isValidEmail = (email: string): boolean => {
 		return false;
 	}
 
-	if (email.endsWith('@') || email.startsWith('@')) {
+	// email may not contain spaces
+	if (email.includes(' ')) {
 		return false;
 	}
 
 	const emailAsArray = email.split('@');
 
+	// only one @ is allowed
 	if (emailAsArray.length !== 2) {
 		return false;
 	}
 
+	// local part may not start or end with @
+	if (emailAsArray[0].endsWith('@') || emailAsArray[0].startsWith('@')) {
+		return false;
+	}
+
+	// domain may not start or end with .
 	const domain = emailAsArray[1];
 
 	if (domain.endsWith('.') || domain.startsWith('.')) {
