@@ -8,7 +8,7 @@ import type RootStoreType from './RootStore.tsx'; // avoid circular dependency
 import { LinkInterface } from '../Links/links.ts';
 
 export default class LinksStore {
-	linksLoading = false;
+	linksLoading = true;
 
 	links = [];
 

@@ -7,6 +7,7 @@ import { Links } from '../imports/api/Links/links.ts';
 // updated for newer versions and extended
 
 // A class for managing Meteor subscriptions based on observed changes in a state store
+// the state store provides data filtering options, which is why it must be observed
 export default class ReactiveDataManager {
 	// state - a Mobx store instance
 	constructor(state: Class) {
@@ -91,14 +92,6 @@ export default class ReactiveDataManager {
 					},
 				});
 			}
-		});
-
-		// a Mobx autorun function for monitoring the current user
-		autorun(() => {
-			const refreshCurrentUser = () => {
-				const currentUser = Meteor.user();
-				state.updateCurrentUser(currentUser);
-			};
 		});
 	}
 }

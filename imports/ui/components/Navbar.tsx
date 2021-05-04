@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -8,9 +8,12 @@ import {
 	Toolbar,
 	Typography,
 } from '@material-ui/core';
+import { observer } from 'mobx-react';
+
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import PrintIcon from '@material-ui/icons/Print';
+import StoreContext from '../../api/client/storeContext.tsx';
 
 const useStyles = makeStyles((theme) => ({
 	'root': {
@@ -72,18 +75,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar: React.FunctionComponent = () => {
+	const storeContext = useContext(StoreContext);
+
+	const {
+		isLoggedIn,
+		user,
+		usersLoading,
+	} = storeContext.usersStore;
+
 	const location = useLocation();
 	const classes = useStyles();
 	const [menuOpen, setMenuOpen] = useState(false);
 
-	const menuItems = [
+	const demoMenuItems = [
 		{ 'text': 'Reactive data', 'path': '/reactive-data' },
 		{ 'text': 'Simple state', 'path': '/simple-state' },
 		{ 'text': 'Environment variable', 'path': '/env-var' },
 	];
 
-	const accountItems = [
+	const accountMenuItems = [
 		{ 'text': 'Register', 'path': '/register' },
+		{ 'text': 'Login', 'path': '/login' },
 	];
 
 	toggleMenu = () => {
@@ -136,6 +148,21 @@ const Navbar: React.FunctionComponent = () => {
 		</IconButton>
 	);
 
+	const makeAuthLinks = () => {
+		if (usersLoading) {
+			return;
+		}
+
+		if (isLoggedIn) {
+			return makeNavLink({
+				'text': user ? user.username : '',
+				'path': 'account',
+			});
+		}
+
+		return accountMenuItems.map((item) => makeNavLink(item));
+	};
+
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
@@ -145,19 +172,19 @@ const Navbar: React.FunctionComponent = () => {
 						{makePrintButton()}
 					</Toolbar>
 					<Toolbar className={classes.menuDesktop}>
-						{menuItems.map((item) => makeNavLink(item))}
+						{demoMenuItems.map((item) => makeNavLink(item))}
 					</Toolbar>
 					<Toolbar className={classes.toolbarRight}>
-						{accountItems.map((item) => makeNavLink(item))}
+						{makeAuthLinks()}
 						{makeMenuButton()}
 					</Toolbar>
 				</Box>
 				<Toolbar className={`${classes.menuMobile} ${menuOpen ? classes.menuOpen : ''}`}>
-					{menuItems.map((item) => makeNavLink(item))}
+					{demoMenuItems.map((item) => makeNavLink(item))}
 				</Toolbar>
 			</AppBar>
 		</div>
 	);
 };
 
-export default Navbar;
+export default observer(Navbar);

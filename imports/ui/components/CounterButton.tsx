@@ -42,7 +42,7 @@ const CounterButton: React.FunctionComponent = ({ text = 'Click me' }: ownPropTy
 	};
 
 	return (
-		<Button onClick={() => increaseCounter()} className={classes.root}><TouchApp />{text}</Button>
+		<Button onClick={() => handleClick()} className={classes.root}><TouchApp />{text}</Button>
 	);
 };
 

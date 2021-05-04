@@ -209,7 +209,7 @@ const RegisterForm: React.FunctionComponent = (): void => {
 			</Grid>
 			<Grid container spacing={3}>
 				<Grid item xs={6}>
-					<Button type="submit" variant="outlined" aria-label="delete" color="primary">
+					<Button type="submit" variant="outlined" aria-label="create account" color="primary">
 						Create account
 					</Button>
 				</Grid>

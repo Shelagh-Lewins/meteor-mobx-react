@@ -8,31 +8,43 @@ import {
 class UsersStore {
 	rootStore = rootStore; // allows stores to know about each other
 
-	currentUserLoading = false;
-
 	isUsernameAvailable = undefined;
 
 	isEmailAvailable = undefined;
 
-	isLoggedIn = undefined;
+	userId = undefined;
 
-	currentUser = undefined;
+	user = undefined;
+
+	usersLoading = true;
 
 	constructor(rootStore: RootStore) {
 		makeAutoObservable(this);
 	}
 
-	updateCurrentUser = (newCurrentUser: Record<string, unknown>): void => {
-		this.currentUser = newCurrentUser;
-	};
-
-	setCurrentUserLoading = (currentUserLoading: boolean): void => {
-		this.currentUserLoading = currentUserLoading;
-	};
-
-	createReactiveUserManager = (): void => {
-		this.dataManager = new ReactiveUserManager(this);
+	get isLoggedIn(): boolean {
+		return !!this.userId;
 	}
+
+	setUsersLoading = (usersLoading: boolean): void => {
+		this.usersLoading = usersLoading;
+	};
+
+	setUserId = (userId: string): void => {
+		this.userId = userId;
+	};
+
+	clearUserId = (): void => {
+		this.userId = undefined;
+	};
+
+	setUser = (user: Record<string, unknown>): void => {
+		this.user = user;
+	};
+
+	clearUser = (): void => {
+		this.user = undefined;
+	};
 
 	createUserAccount = (userInfo: UsersInterface): void => {
 		this.rootStore.pageStore.clearAlert();
@@ -67,7 +79,6 @@ class UsersStore {
 				console.log('login succeeded');
 				//TODO navigate home
 			}
-			console.log('user logged in', Meteor.user());
 		});
 	};
 

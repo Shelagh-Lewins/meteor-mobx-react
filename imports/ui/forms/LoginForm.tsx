@@ -21,6 +21,7 @@ const LoginForm: React.FunctionComponent = (): void => {
 
 	const storeContext = useContext(StoreContext);
 	const {
+		isLoggedIn,
 		login,
 	} = storeContext.usersStore;
 	const handleLogin = async (data) => {
@@ -32,6 +33,10 @@ const LoginForm: React.FunctionComponent = (): void => {
 			'password': '',
 		});
 	};
+
+	if (isLoggedIn) {
+		return <div>You are already logged in</div>;
+	}
 
 	return (
 		// padding overcomes negative margin introduced by grid spacing
@@ -94,7 +99,7 @@ const LoginForm: React.FunctionComponent = (): void => {
 			</Grid>
 			<Grid container spacing={3}>
 				<Grid item xs={6}>
-					<Button type="submit" variant="outlined" aria-label="delete" color="primary">
+					<Button type="submit" variant="outlined" aria-label="login" color="primary">
 						Login
 					</Button>
 				</Grid>
