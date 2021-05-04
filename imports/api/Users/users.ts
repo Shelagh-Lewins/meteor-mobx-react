@@ -8,6 +8,12 @@ export interface UsersInterface {
 	createdAt?: Date;
 }
 
+// login info
+export interface AuthInterface {
+	user: string; // username or email
+	password: string;
+}
+
 // Don't let people write arbitrary data to their 'profile' field from the client
 Meteor.users.deny({
 	update() {

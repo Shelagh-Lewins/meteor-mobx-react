@@ -92,5 +92,13 @@ export default class ReactiveDataManager {
 				});
 			}
 		});
+
+		// a Mobx autorun function for monitoring the current user
+		autorun(() => {
+			const refreshCurrentUser = () => {
+				const currentUser = Meteor.user();
+				state.updateCurrentUser(currentUser);
+			};
+		});
 	}
 }
