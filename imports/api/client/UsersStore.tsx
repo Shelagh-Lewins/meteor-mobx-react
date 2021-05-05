@@ -60,6 +60,7 @@ class UsersStore {
 					'message': `User account created with username "${result.username}"`,
 					'severity': 'success',
 				});
+				this.rootStore.navigationStore.push('/login');
 			}
 		});
 	};
@@ -76,8 +77,7 @@ class UsersStore {
 					'severity': 'error',
 				});
 			} else {
-				console.log('login succeeded');
-				//TODO navigate home
+				this.rootStore.navigationStore.push('/');
 			}
 		});
 	};
@@ -92,8 +92,7 @@ class UsersStore {
 					'severity': 'error',
 				});
 			} else {
-
-				//TODO navigate home
+				this.rootStore.navigationStore.push('/');
 			}
 		});
 	};

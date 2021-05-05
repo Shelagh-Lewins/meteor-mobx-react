@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import {
-	BrowserRouter as Router,
-	Switch,
 	Route,
+	Switch,
 } from 'react-router-dom';
+import {
+	Router,
+} from 'react-router';
 import { observer } from 'mobx-react';
 import { Tracker } from 'meteor/tracker';
 
@@ -52,7 +54,7 @@ const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTy
 				<Navbar	/>
 				<div className="main-container">
 					{state.pageStore.alert && <AlertView />}
-					<Route exact path="/" component={Home} />
+					<Route exact path="/" component={Home} history={state.navigationStore} />
 					<Route exact path="/reactive-data" component={ReactiveData} />
 					<Route exact path="/simple-state" component={SimpleState} />
 					<Route exact path="/env-var" component={EnvVar} />
@@ -75,7 +77,8 @@ const PrintContainer: React.FunctionComponent = () => (
 );
 
 const renderApp = (state: Class): void => (
-	<Router>
+	// custom history allows navigationStore to navigate e.g. after login
+	<Router history={state.navigationStore.history}>
 		<Switch>
 			<Route exact path="/print-view" component={PrintContainer} />
 			<Route render={() => <DefaultContainer state={state} />} />

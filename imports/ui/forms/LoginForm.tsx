@@ -23,6 +23,7 @@ const LoginForm: React.FunctionComponent = (): void => {
 	const {
 		isLoggedIn,
 		login,
+		usersLoading,
 	} = storeContext.usersStore;
 	const handleLogin = async (data) => {
 		await login(data);
@@ -33,6 +34,10 @@ const LoginForm: React.FunctionComponent = (): void => {
 			'password': '',
 		});
 	};
+
+	if (usersLoading) {
+		return <div>Loading...</div>;
+	}
 
 	if (isLoggedIn) {
 		return <div>You are already logged in</div>;
