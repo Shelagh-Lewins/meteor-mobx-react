@@ -19,7 +19,7 @@ const LinksView: React.FunctionComponent = () => {
 		toggleShowComments,
 	} = storeContext.linksStore;
 
-	handleClick = (linkId: string) => {
+	const handleClick = (linkId: string) => {
 		addCommentFilterValue(linkId);
 		toggleShowComments(linkId);
 	};

@@ -1,8 +1,8 @@
 // Methods that affect Meteor.users
-import { check } from 'meteor/check';
 import isValidEmail from '../modules/isValidEmail.ts';
 import isValidPassword from '../modules/isValidPassword.ts';
 import isValidUsername from '../modules/isValidUsername.ts';
+import nonEmptyStringCheck from '../modules/server/nonEmptyStringCheck.ts';
 
 if (Meteor.isServer) {
 	Meteor.methods({
@@ -39,11 +39,16 @@ if (Meteor.isServer) {
 				throw new Meteor.Error('create-user-account-email-not-available', `Unable to create new user account because email address "${email}" is not available`);
 			}
 
-			Accounts.createUser({
+			const newUserId = Accounts.createUser({
 				email,
 				password,
 				username,
 			});
+
+			// email is not sent automatically because we are creating the user on the server, not the client
+			if (newUserId) {
+				Accounts.sendVerificationEmail(newUserId);
+			}
 
 			return { password, username };
 		},
@@ -78,6 +83,17 @@ if (Meteor.isServer) {
 			}
 
 			return true;
+		},
+		'users.sendVerificationEmail'({
+			userId,
+		}) {
+			check(userId, nonEmptyStringCheck);
+
+			if (userId !== Meteor.userId()) {
+				throw new Meteor.Error('send-verification-email-not-logged-in', 'Unable to send verification email because the user is not logged in');
+			}
+
+			return Accounts.sendVerificationEmail(userId);
 		},
 	});
 }

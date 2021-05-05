@@ -6,20 +6,20 @@ import StoreContext from '../../api/client/storeContext.tsx';
 
 // A function component wrapped with `observer` will react
 // to any future change in an observable it used before.
-const LogoutButton: React.FunctionComponent = () => {
+const ResendVerificationEmailButton: React.FunctionComponent = () => {
 	const storeContext = useContext(StoreContext);
 
 	const {
-		logout,
+		resendVerificationEmail,
 	} = storeContext.usersStore;
 
 	const handleClick = () => {
-		logout();
+		resendVerificationEmail();
 	};
 
 	return (
-		<Button onClick={() => handleClick()} variant="contained" color="secondary">Log out</Button>
+		<Button onClick={() => handleClick()} variant="contained" color="secondary">Resend verification email</Button>
 	);
 };
 
-export default observer(LogoutButton);
+export default observer(ResendVerificationEmailButton);

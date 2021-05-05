@@ -37,7 +37,7 @@ const CounterButton: React.FunctionComponent = ({ text = 'Click me' }: ownPropTy
 
 	const classes = useStyles();
 
-	handleClick = () => {
+	const handleClick = () => {
 		increaseCounter(); // keep 'this' context
 	};
 

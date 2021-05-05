@@ -19,13 +19,14 @@ import PrintView from './containers/PrintView.tsx';
 import Register from './containers/Register.tsx';
 import Login from './containers/Login.tsx';
 import Account from './containers/Account.tsx';
+import VerifyEmail from './containers/VerifyEmail.tsx';
 
 import { StoreProvider } from '../api/client/storeContext.tsx';
 
 const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTypes) => {
 	// this pattern uses the existing Meteor functionality to populate the Mobx store with data for the logged-in user
 	// Meteor.user() is a global subscription so we cannot use the reactive data manager to tell when the subscription is ready, and Meteor.userId() may be set at page reload, not by a user action
-	// The UI can now get all user data from the store and does not need to know about Meteor
+	// This setup allows the UI get all user data from the store without knowing about Meteor
 	useEffect(() => {
 		Tracker.autorun(() => {
 			if (Accounts.loginServicesConfigured()) {
@@ -61,6 +62,7 @@ const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTy
 					<Route exact path="/register" component={Register} />
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/account" component={Account} />
+					<Route exact path="/verify-email/:token" component={VerifyEmail} />
 				</div>
 			</div>
 		</StoreProvider>

@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
 	'toolbarRight': {
 		'display': 'flex',
 		'marginLeft': 'auto',
+		'& a': {
+			'marginRight': theme.spacing(1),
+		},
 	},
 	'homeButton': {
 		'marginRight': theme.spacing(2),
@@ -156,7 +159,7 @@ const Navbar: React.FunctionComponent = () => {
 		if (isLoggedIn) {
 			return makeNavLink({
 				'text': user ? user.username : '',
-				'path': 'account',
+				'path': '/account',
 			});
 		}
 

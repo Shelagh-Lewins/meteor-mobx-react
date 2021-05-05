@@ -1,4 +1,7 @@
-import { makeAutoObservable } from 'mobx';
+import {
+	makeAutoObservable,
+	toJS,
+} from 'mobx';
 import type RootStore from './RootStore.tsx'; // avoid circular dependency
 import {
 	AuthInterface,
@@ -24,6 +27,14 @@ class UsersStore {
 
 	get isLoggedIn(): boolean {
 		return !!this.userId;
+	}
+
+	get isEmailVerified(): boolean {
+		if (!this.user) {
+			return false;
+		}
+
+		return toJS(this.user).emails[0].verified;
 	}
 
 	setUsersLoading = (usersLoading: boolean): void => {
@@ -96,6 +107,44 @@ class UsersStore {
 			}
 		});
 	};
+
+	resendVerificationEmail = (): void => {
+		this.rootStore.pageStore.clearAlert();
+
+		if (this.userId && this.user) {
+			Meteor.call('users.sendVerificationEmail', {
+				'userId': this.user._id,
+			}, (error, result) => {
+				if (error) {
+					this.rootStore.pageStore.setAlert({
+						'message': error.reason,
+						'severity': 'error',
+					});
+				} else {
+					this.rootStore.pageStore.setAlert({
+						'message': `Verification email resent to "${this.user.emails[0].address}". If you don't see it, make sure to check your Junk folder`,
+						'severity': 'success',
+					});
+				}
+			});
+		}
+	}
+
+	verifyEmail = (token: string): void => {
+		Accounts.verifyEmail(token, (error) => {
+			if (error) {
+				this.rootStore.pageStore.setAlert({
+					'message': error.reason,
+					'severity': 'error',
+				});
+			} else {
+				this.rootStore.pageStore.setAlert({
+					'message': 'Your email address has been verified',
+					'severity': 'success',
+				});
+			}
+		});
+	}
 }
 
 export default UsersStore;
