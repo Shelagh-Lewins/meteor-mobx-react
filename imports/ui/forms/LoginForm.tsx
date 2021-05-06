@@ -46,7 +46,6 @@ const LoginForm: React.FunctionComponent = (): void => {
 	return (
 		// padding overcomes negative margin introduced by grid spacing
 		<form onSubmit={handleSubmit(handleLogin)} className="accounts-form">
-			<Typography variant="h3">Login</Typography>
 			<Typography paragraph>Log in to your account.</Typography>
 			<Grid container spacing={3}>
 				<Grid item xs={12} md={6}>

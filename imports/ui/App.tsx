@@ -20,6 +20,8 @@ import Register from './containers/Register.tsx';
 import Login from './containers/Login.tsx';
 import Account from './containers/Account.tsx';
 import VerifyEmail from './containers/VerifyEmail.tsx';
+import ForgotPassword from './containers/ForgotPassword.tsx';
+import ResetPassword from './containers/ResetPassword.tsx';
 
 import { StoreProvider } from '../api/client/storeContext.tsx';
 
@@ -63,6 +65,8 @@ const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTy
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/account" component={Account} />
 					<Route exact path="/verify-email/:token" component={VerifyEmail} />
+					<Route exact path="/forgot-password" component={ForgotPassword} />
+					<Route exact path="/reset-password/:token" component={ResetPassword} />
 				</div>
 			</div>
 		</StoreProvider>

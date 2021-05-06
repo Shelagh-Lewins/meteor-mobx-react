@@ -168,6 +168,45 @@ class UsersStore {
 			}
 		});
 	}
+
+	forgotPassword = (email: string): void => {
+		console.log('forgot password', email);
+		this.rootStore.pageStore.clearAlert();
+
+		Accounts.forgotPassword({ email }, (error) => {
+			if (error) {
+				this.rootStore.pageStore.setAlert({
+					'message': error.reason,
+					'severity': 'error',
+				});
+			} else {
+				this.rootStore.pageStore.setAlert({
+					'message': `A password reset email has been sent to ${email}. If you do not see it, please check your Junk folder`,
+					'severity': 'success',
+				});
+			}
+		});
+	}
+
+	resetPassword = (passwordInfo: resetPasswordInterface): void => {
+		const { token, password } = passwordInfo;
+
+		this.rootStore.pageStore.clearAlert();
+
+		Accounts.resetPassword(token, password, (error) => {
+			if (error) {
+				this.rootStore.pageStore.setAlert({
+					'message': error.reason,
+					'severity': 'error',
+				});
+			} else {
+				this.rootStore.pageStore.setAlert({
+					'message': 'Your password has been reset',
+					'severity': 'success',
+				});
+			}
+		});
+	}
 }
 
 export default UsersStore;
