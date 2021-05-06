@@ -10,7 +10,10 @@ import StoreContext from '../../api/client/storeContext.tsx';
 const useStyles = makeStyles((theme: Theme) => createStyles({
 	'root': {
 		'marginBottom': theme.spacing(1),
+		'position': 'sticky',
+		'top': 0,
 		'width': '100%',
+		'z-index': 100,
 		'& > * + *': {
 			'marginTop': theme.spacing(2),
 		},

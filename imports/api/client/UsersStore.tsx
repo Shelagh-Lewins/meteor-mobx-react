@@ -5,6 +5,7 @@ import {
 import type RootStore from './RootStore.tsx'; // avoid circular dependency
 import {
 	AuthInterface,
+	ChangePasswordInterface
 	UsersInterface,
 } from '../Users/users.ts';
 
@@ -131,6 +132,8 @@ class UsersStore {
 	}
 
 	verifyEmail = (token: string): void => {
+		this.rootStore.pageStore.clearAlert();
+
 		Accounts.verifyEmail(token, (error) => {
 			if (error) {
 				this.rootStore.pageStore.setAlert({
@@ -140,6 +143,26 @@ class UsersStore {
 			} else {
 				this.rootStore.pageStore.setAlert({
 					'message': 'Your email address has been verified',
+					'severity': 'success',
+				});
+			}
+		});
+	}
+
+	changePassword = (passwordInfo: ChangePasswordInterface): void => {
+		const { oldPassword, newPassword } = passwordInfo;
+
+		this.rootStore.pageStore.clearAlert();
+
+		Accounts.changePassword(oldPassword, newPassword, (error) => {
+			if (error) {
+				this.rootStore.pageStore.setAlert({
+					'message': error.reason,
+					'severity': 'error',
+				});
+			} else {
+				this.rootStore.pageStore.setAlert({
+					'message': 'Your password has been changed',
 					'severity': 'success',
 				});
 			}

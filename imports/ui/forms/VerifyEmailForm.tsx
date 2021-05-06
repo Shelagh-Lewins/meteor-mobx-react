@@ -69,7 +69,7 @@ const VerifyEmailForm: React.FunctionComponent = (): void => {
 			</Grid>
 			<Grid container spacing={3}>
 				<Grid item xs={6}>
-					<Button type="submit" variant="outlined" aria-label="login" color="primary">
+					<Button type="submit" variant="outlined" aria-label="verify email address" color="primary">
 						Verify email address
 					</Button>
 				</Grid>

@@ -14,6 +14,12 @@ export interface AuthInterface {
 	password: string;
 }
 
+// change password info
+export interface ChangePasswordInterface {
+	newPassword: string; // username or email
+	oldPassword: string;
+}
+
 // Don't let people write arbitrary data to their 'profile' field from the client
 Meteor.users.deny({
 	update() {
