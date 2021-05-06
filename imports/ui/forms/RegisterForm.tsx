@@ -50,7 +50,7 @@ const RegisterForm: React.FunctionComponent = (): void => {
 
 	return (
 		// padding overcomes negative margin introduced by grid spacing
-		<form onSubmit={handleSubmit(handleRegistration)} className="accounts-form" style={{ 'padding': 20 }}>
+		<form onSubmit={handleSubmit(handleRegistration)} className="accounts-form">
 			<Typography variant="h3">Register</Typography>
 			<Typography paragraph>Create a new user account on the demo site.</Typography>
 			<Grid container spacing={3}>
@@ -209,7 +209,7 @@ const RegisterForm: React.FunctionComponent = (): void => {
 			</Grid>
 			<Grid container spacing={3}>
 				<Grid item xs={6}>
-					<Button type="submit" variant="outlined" aria-label="create account" color="primary">
+					<Button type="submit" variant="contained" aria-label="create account" color="primary">
 						Create account
 					</Button>
 				</Grid>

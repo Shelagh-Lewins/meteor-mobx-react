@@ -26,7 +26,7 @@ const VerifyEmail: React.FunctionComponent = () => {
 			verifyEmail(token);
 			setHaveVerified(true);
 		}
-	});
+	}, [haveVerified, verifyEmail, token]);
 
 	const makePanelContent = () => {
 		if (usersLoading) {

@@ -45,7 +45,7 @@ const LoginForm: React.FunctionComponent = (): void => {
 
 	return (
 		// padding overcomes negative margin introduced by grid spacing
-		<form onSubmit={handleSubmit(handleLogin)} className="accounts-form" style={{ 'padding': 20 }}>
+		<form onSubmit={handleSubmit(handleLogin)} className="accounts-form">
 			<Typography variant="h3">Login</Typography>
 			<Typography paragraph>Log in to your account.</Typography>
 			<Grid container spacing={3}>
@@ -62,8 +62,8 @@ const LoginForm: React.FunctionComponent = (): void => {
 								className="form-text-field"
 								// error must be boolean
 								// eslint-disable-next-line no-unneeded-ternary
-								error={errors.username ? true : false}
-								helperText={errors.username && errors.username.message}
+								error={errors.user ? true : false}
+								helperText={errors.user && errors.user.message}
 								label="Username or email address"
 								variant="filled"
 							/>
@@ -104,7 +104,7 @@ const LoginForm: React.FunctionComponent = (): void => {
 			</Grid>
 			<Grid container spacing={3}>
 				<Grid item xs={6}>
-					<Button type="submit" variant="outlined" aria-label="login" color="primary">
+					<Button type="submit" variant="contained" aria-label="login" color="primary">
 						Login
 					</Button>
 				</Grid>

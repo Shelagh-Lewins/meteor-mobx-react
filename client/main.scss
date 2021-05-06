@@ -15,11 +15,12 @@ body {
 	background-color: $color-panel-background;
 	border-radius: 4px;
 	margin-bottom: 8px;
-	padding: 8px;
+	padding: 16px;
 }
 
 .accounts-form {
 	flex-grow: 1;
+	padding: 16px;
 
 	.form-text-field {
 		width: 100%;

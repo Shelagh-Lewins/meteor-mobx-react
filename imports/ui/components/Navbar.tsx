@@ -119,6 +119,7 @@ const Navbar: React.FunctionComponent = () => {
 	const makeHomeButton = () => (
 		<IconButton
 			aria-label="home"
+			className={`${classes.navLink} ${location.pathname === '/' ? classes.active : ''}`}
 			color="inherit"
 			component={Link}
 			edge="start"
@@ -143,6 +144,7 @@ const Navbar: React.FunctionComponent = () => {
 	const makePrintButton = () => (
 		<IconButton
 			aria-label="print view"
+			className={`${classes.navLink} ${location.pathname === '/print-view' ? classes.active : ''}`}
 			color="inherit"
 			component={Link}
 			to="/print-view"

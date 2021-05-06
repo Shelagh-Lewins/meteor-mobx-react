@@ -18,7 +18,7 @@ const ResendVerificationEmailButton: React.FunctionComponent = () => {
 	};
 
 	return (
-		<Button onClick={() => handleClick()} variant="contained" color="secondary">Resend verification email</Button>
+		<Button onClick={() => handleClick()} variant="outlined" color="primary">Resend verification email</Button>
 	);
 };
 
