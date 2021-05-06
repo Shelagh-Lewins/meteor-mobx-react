@@ -5,7 +5,7 @@ import {
 import type RootStore from './RootStore.tsx'; // avoid circular dependency
 import {
 	AuthInterface,
-	ChangePasswordInterface
+	ChangePasswordInterface,
 	UsersInterface,
 } from '../Users/users.ts';
 
@@ -60,8 +60,11 @@ class UsersStore {
 
 	createUserAccount = (userInfo: UsersInterface): void => {
 		this.rootStore.pageStore.clearAlert();
+		this.rootStore.pageStore.setWaiting();
 
 		Meteor.call('users.createUserAccount', userInfo, (error, result) => {
+			this.rootStore.pageStore.clearWaiting();
+
 			if (error) {
 				this.rootStore.pageStore.setAlert({
 					'message': error.reason,
@@ -83,12 +86,15 @@ class UsersStore {
 
 	login = (authInfo: AuthInterface, clearAlert = true): void => {
 		const { password, user } = authInfo;
+		this.rootStore.pageStore.setWaiting();
 
 		if (clearAlert) { // if auto login after account creation, we want to retain the "Account created" message unless there is a new one
 			this.rootStore.pageStore.clearAlert();
 		}
 
 		Meteor.loginWithPassword(user, password, (error) => {
+			this.rootStore.pageStore.clearWaiting();
+
 			if (error) {
 				this.rootStore.pageStore.setAlert({
 					'message': error.reason,
@@ -102,8 +108,11 @@ class UsersStore {
 
 	logout = (): void => {
 		this.rootStore.pageStore.clearAlert();
+		this.rootStore.pageStore.setWaiting();
 
 		Meteor.logout((error) => {
+			this.rootStore.pageStore.clearWaiting();
+
 			if (error) {
 				this.rootStore.pageStore.setAlert({
 					'message': error.reason,
@@ -119,9 +128,13 @@ class UsersStore {
 		this.rootStore.pageStore.clearAlert();
 
 		if (this.userId && this.user) {
+			this.rootStore.pageStore.setWaiting();
+
 			Meteor.call('users.sendVerificationEmail', {
 				'userId': this.user._id,
 			}, (error, result) => {
+				this.rootStore.pageStore.clearWaiting();
+
 				if (error) {
 					this.rootStore.pageStore.setAlert({
 						'message': error.reason,
@@ -139,8 +152,11 @@ class UsersStore {
 
 	verifyEmail = (token: string): void => {
 		this.rootStore.pageStore.clearAlert();
+		this.rootStore.pageStore.setWaiting();
 
 		Accounts.verifyEmail(token, (error) => {
+			this.rootStore.pageStore.clearWaiting();
+
 			if (error) {
 				this.rootStore.pageStore.setAlert({
 					'message': error.reason,
@@ -159,8 +175,11 @@ class UsersStore {
 		const { oldPassword, newPassword } = passwordInfo;
 
 		this.rootStore.pageStore.clearAlert();
+		this.rootStore.pageStore.setWaiting();
 
 		Accounts.changePassword(oldPassword, newPassword, (error) => {
+			this.rootStore.pageStore.clearWaiting();
+
 			if (error) {
 				this.rootStore.pageStore.setAlert({
 					'message': error.reason,
@@ -176,10 +195,12 @@ class UsersStore {
 	}
 
 	forgotPassword = (email: string): void => {
-		console.log('forgot password', email);
 		this.rootStore.pageStore.clearAlert();
+		this.rootStore.pageStore.setWaiting();
 
 		Accounts.forgotPassword({ email }, (error) => {
+			this.rootStore.pageStore.clearWaiting();
+
 			if (error) {
 				this.rootStore.pageStore.setAlert({
 					'message': error.reason,
@@ -198,8 +219,11 @@ class UsersStore {
 		const { token, password } = passwordInfo;
 
 		this.rootStore.pageStore.clearAlert();
+		this.rootStore.pageStore.setWaiting();
 
 		Accounts.resetPassword(token, password, (error) => {
+			this.rootStore.pageStore.clearWaiting();
+
 			if (error) {
 				this.rootStore.pageStore.setAlert({
 					'message': error.reason,

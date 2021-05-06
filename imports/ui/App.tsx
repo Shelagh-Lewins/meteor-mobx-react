@@ -10,6 +10,7 @@ import { observer } from 'mobx-react';
 import { Tracker } from 'meteor/tracker';
 
 import AlertView from './components/AlertView.tsx';
+import WaitingView from './components/WaitingView.tsx';
 import Navbar from './components/Navbar.tsx';
 import Home from './containers/Home.tsx';
 import SimpleState from './containers/SimpleState.tsx';
@@ -58,6 +59,7 @@ const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTy
 				<Navbar	/>
 				<div className="main-container">
 					{state.pageStore.alert && <AlertView />}
+					{state.pageStore.waiting && <WaitingView />}
 					<Switch>
 						<Route exact path="/" component={Home} history={state.navigationStore} />
 						<Route exact path="/reactive-data" component={ReactiveData} />

@@ -9,9 +9,11 @@ export interface AlertInterface {
 class PageStore {
 	myEnvVar = ''
 
-	alert = undefined
+	alert = undefined;
 
 	rootStore = rootStore; // allows stores to know about each other
+
+	waiting = false;
 
 	constructor(rootStore: RootStore) {
 		makeAutoObservable(this);
@@ -34,6 +36,22 @@ class PageStore {
 
 	clearAlert = (): void => {
 		this.alert = undefined;
+	};
+
+	setWaiting = (): void => {
+		this.rootStore.pageStore.waiting = true;
+	};
+
+	setWaitingFalse = (): void => {
+		this.rootStore.pageStore.waiting = false;
+	};
+
+	clearWaiting = (): void => {
+		// this should not be necessary, but makes absolutely certain the state will be cleared after the current loop is finished, i.e. after the 'waiting' state has been set true, to avoid uncleared spinner.
+		setTimeout(() => {
+			// use an action to observe strict mode
+			this.rootStore.pageStore.setWaitingFalse();
+		}, 1);
 	};
 }
 
