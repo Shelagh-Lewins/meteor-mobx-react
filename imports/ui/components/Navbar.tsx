@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import {
 	AppBar,
 	Box,
 	IconButton,
+	makeStyles,
 	Toolbar,
 	Typography,
 } from '@material-ui/core';

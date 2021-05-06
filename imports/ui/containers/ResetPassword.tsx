@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { observer } from 'mobx-react';
+
 import {
 	Grid,
 	Typography,
@@ -23,4 +23,4 @@ const ResetPassword: React.FunctionComponent = () => {
 	);
 };
 
-export default observer(ResetPassword);
+export default ResetPassword;

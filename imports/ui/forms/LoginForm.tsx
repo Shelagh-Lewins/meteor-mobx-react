@@ -49,6 +49,7 @@ const LoginForm: React.FunctionComponent = (): void => {
 			<Typography paragraph>Log in to your account.</Typography>
 			<Grid container spacing={3}>
 				<Grid item xs={12} md={6}>
+					<Hint text="You can enter either your username or your email address." />
 					<Controller
 						control={control}
 						defaultValue=""
@@ -71,7 +72,6 @@ const LoginForm: React.FunctionComponent = (): void => {
 							'required': 'Username is required',
 						}}
 					/>
-					<Hint text="You can enter either your username or your email address." />
 				</Grid>
 			</Grid>
 			<Grid container spacing={3}>

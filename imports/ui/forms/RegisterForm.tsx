@@ -30,7 +30,7 @@ const RegisterForm: React.FunctionComponent = (): void => {
 		getValues,
 		reset,
 		trigger,
-	} = useForm({ 'mode': 'all' }); // 'all' so email and username availability are checked before submit
+	} = useForm(); // 'all' so email and username availability are checked before submit
 
 	const storeContext = useContext(StoreContext);
 	const {
@@ -51,9 +51,10 @@ const RegisterForm: React.FunctionComponent = (): void => {
 	return (
 		// padding overcomes negative margin introduced by grid spacing
 		<form onSubmit={handleSubmit(handleRegistration)} className="accounts-form">
-			<Typography paragraph>Create a new user account on the demo site.</Typography>
+			<Typography paragraph>Create a new user account.</Typography>
 			<Grid container spacing={3}>
 				<Grid item xs={12} md={6}>
+					<Hint text="Your username is how other users will see you." />
 					<Controller
 						control={control}
 						defaultValue=""
@@ -69,6 +70,10 @@ const RegisterForm: React.FunctionComponent = (): void => {
 								error={errors.username ? true : false}
 								helperText={errors.username && errors.username.message}
 								label="Username"
+								onChange={(e) => {
+									field.onChange(e);
+									trigger('username'); // check availability immediately
+								}}
 								variant="filled"
 							/>
 						)}
@@ -90,15 +95,15 @@ const RegisterForm: React.FunctionComponent = (): void => {
 									return `The username "${value}" is not available`;
 								}
 
-								return isValidUsername(value) ? true : 'Username cannot contain spaces';
+								return isValidUsername(value) ? true : 'Username cannot contain @ or spaces';
 							},
 						}}
 					/>
-					<Hint text="Your username is how other users will see you." />
 				</Grid>
 			</Grid>
 			<Grid container spacing={3}>
 				<Grid item xs={12} md={6}>
+					<Hint text="Your email address will not be visible to other users." />
 					<Controller
 						control={control}
 						defaultValue=""
@@ -114,6 +119,10 @@ const RegisterForm: React.FunctionComponent = (): void => {
 								error={errors.email ? true : false}
 								helperText={errors.email && errors.email.message}
 								label="Email address"
+								onChange={(e) => {
+									field.onChange(e); // check availability immediately
+									trigger('email');
+								}}
 								variant="filled"
 							/>
 						)}
@@ -130,7 +139,6 @@ const RegisterForm: React.FunctionComponent = (): void => {
 							},
 						}}
 					/>
-					<Hint text="Your email address will not be visible to other users." />
 				</Grid>
 			</Grid>
 			<Grid container spacing={3}>

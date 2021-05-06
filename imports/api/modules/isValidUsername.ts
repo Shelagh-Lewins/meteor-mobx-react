@@ -17,6 +17,11 @@ const isValidUsername = (username: string): boolean => {
 		return false;
 	}
 
+	// username may not contain @
+	if (username.includes('@')) {
+		return false;
+	}
+
 	if (username.length > USERNAME_MAX_LENGTH || username.length < USERNAME_MIN_LENGTH) {
 		return false;
 	}

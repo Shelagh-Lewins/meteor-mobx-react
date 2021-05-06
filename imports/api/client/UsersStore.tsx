@@ -69,18 +69,24 @@ class UsersStore {
 				});
 			} else {
 				this.rootStore.pageStore.setAlert({
-					'message': `User account created with username "${result.username}"`,
+					'message': `User account created with username "${result.username}".`,
 					'severity': 'success',
 				});
-				this.rootStore.navigationStore.push('/login');
+
+				this.login({
+					'password': userInfo.password,
+					'user': userInfo.username,
+				}, false);
 			}
 		});
 	};
 
-	login = (authInfo: AuthInterface): void => {
+	login = (authInfo: AuthInterface, clearAlert = true): void => {
 		const { password, user } = authInfo;
 
-		this.rootStore.pageStore.clearAlert();
+		if (clearAlert) { // if auto login after account creation, we want to retain the "Account created" message unless there is a new one
+			this.rootStore.pageStore.clearAlert();
+		}
 
 		Meteor.loginWithPassword(user, password, (error) => {
 			if (error) {

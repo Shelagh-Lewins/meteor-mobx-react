@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+	Button,
+	makeStyles,
+} from '@material-ui/core';
 import TouchApp from '@material-ui/icons/TouchApp';
 import PropTypes, { InferProps } from 'prop-types';
 

@@ -22,6 +22,7 @@ import Account from './containers/Account.tsx';
 import VerifyEmail from './containers/VerifyEmail.tsx';
 import ForgotPassword from './containers/ForgotPassword.tsx';
 import ResetPassword from './containers/ResetPassword.tsx';
+import NotFound from './containers/NotFound.tsx';
 
 import { StoreProvider } from '../api/client/storeContext.tsx';
 
@@ -57,16 +58,19 @@ const DefaultContainer: React.FunctionComponent = observer(({ state }: ownPropTy
 				<Navbar	/>
 				<div className="main-container">
 					{state.pageStore.alert && <AlertView />}
-					<Route exact path="/" component={Home} history={state.navigationStore} />
-					<Route exact path="/reactive-data" component={ReactiveData} />
-					<Route exact path="/simple-state" component={SimpleState} />
-					<Route exact path="/env-var" component={EnvVar} />
-					<Route exact path="/register" component={Register} />
-					<Route exact path="/login" component={Login} />
-					<Route exact path="/account" component={Account} />
-					<Route exact path="/verify-email/:token" component={VerifyEmail} />
-					<Route exact path="/forgot-password" component={ForgotPassword} />
-					<Route exact path="/reset-password/:token" component={ResetPassword} />
+					<Switch>
+						<Route exact path="/" component={Home} history={state.navigationStore} />
+						<Route exact path="/reactive-data" component={ReactiveData} />
+						<Route exact path="/simple-state" component={SimpleState} />
+						<Route exact path="/env-var" component={EnvVar} />
+						<Route exact path="/register" component={Register} />
+						<Route exact path="/login" component={Login} />
+						<Route exact path="/account" component={Account} />
+						<Route exact path="/verify-email/:token" component={VerifyEmail} />
+						<Route exact path="/forgot-password" component={ForgotPassword} />
+						<Route exact path="/reset-password/:token" component={ResetPassword} />
+						<Route component={NotFound} />
+					</Switch>
 				</div>
 			</div>
 		</StoreProvider>

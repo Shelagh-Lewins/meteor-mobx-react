@@ -23,6 +23,7 @@ body {
 	padding: 16px;
 
 	.form-text-field {
+		min-height: 80px; // leave space for validation messages
 		width: 100%;
 	}
 }

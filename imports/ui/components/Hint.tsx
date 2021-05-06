@@ -2,9 +2,9 @@ import React from 'react';
 import {
 	Box,
 	createMuiTheme,
+	makeStyles,
 	Typography,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import PropTypes, { InferProps } from 'prop-types';
 import InfoIcon from '@material-ui/icons/Info';
 
@@ -18,6 +18,9 @@ const useStyles = makeStyles({
 			'margin-left': theme.spacing(1),
 		},
 	},
+	'icon': {
+		'color': theme.palette.info.dark,
+	},
 });
 
 type ownPropTypes = InferProps<CounterView.propTypes>;
@@ -28,7 +31,7 @@ const Hint: React.FunctionComponent = ({ text }: ownPropTypes) => {
 	return (
 		<Box alignItems="center" display="flex" className={classes.root}>
 			<Box>
-				<InfoIcon />
+				<InfoIcon className={classes.icon} />
 			</Box>
 			<Box>
 				<Typography>{text}</Typography>
