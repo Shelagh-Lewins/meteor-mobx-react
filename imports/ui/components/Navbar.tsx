@@ -91,9 +91,9 @@ const Navbar: React.FunctionComponent = () => {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const demoMenuItems = [
-		{ 'text': 'Reactive data', 'path': '/reactive-data' },
-		{ 'text': 'Simple state', 'path': '/simple-state' },
 		{ 'text': 'Environment variable', 'path': '/env-var' },
+		{ 'text': 'Simple state', 'path': '/simple-state' },
+		{ 'text': 'Reactive data', 'path': '/reactive-data' },
 	];
 
 	const accountMenuItems = [

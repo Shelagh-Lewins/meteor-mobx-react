@@ -13,7 +13,7 @@ const CounterView: React.FunctionComponent = () => {
 
 	return (
 		<>
-			<p>This section demonstrates a simple client-only interaction with the Mobx store.</p>
+			<p>This section demonstrates a simple client-side interaction with the Mobx store.</p>
 			<p>The counter value is taken from the Mobx Counter store. Click either button to increment the count.</p>
 			<div>Count: {count}</div>
 			<CounterButton text="Click me first!" />
